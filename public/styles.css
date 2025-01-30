@@ -1,0 +1,156 @@
+/* 🟢 STYLE DE LA BARRE DE NAVIGATION */
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.9); /* Barre blanche semi-transparente */
+    padding: 10px 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+    position: relative;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+nav ul li a:hover {
+    color: #007bff;
+}
+
+/* 🟢 STYLE DU MENU DÉROULANT */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background: white;
+    list-style: none;
+    padding: 10px;
+    top: 100%;
+    left: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li {
+    padding: 5px 10px;
+}
+
+.dropdown-menu li a {
+    color: #333;
+}
+
+.dropdown-menu li a:hover {
+    color: #007bff;
+}
+
+/* 🟢 BOUTON INSCRIPTION */
+.btn-register {
+    background: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-register:hover {
+    background: #0056b3;
+}
+
+/* 🟢 HERO */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    margin-top: 60px;
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.hero-text h1 {
+    font-size: 2.5rem;
+}
+
+.hero-text p {
+    font-size: 1.2rem;
+}
+
+/* 🟢 SECTIONS */
+section {
+    padding: 50px;
+    text-align: center;
+}
+
+#about {
+    background: #f0f0f0;
+}
+
+/* 🟢 FAQ */
+.faq details {
+    background: white;
+    margin: 10px auto;
+    padding: 10px;
+    width: 80%;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.faq details summary {
+    font-weight: bold;
+}
+
+.faq details[open] p {
+    padding-top: 10px;
+}
+
+/* 🟢 CONTACT */
+#contact {
+    background: #e0f7e9;
+}
+
+.social-links img {
+    width: 40px;
+    margin: 10px;
+}
