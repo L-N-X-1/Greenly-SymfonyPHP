@@ -13,10 +13,34 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/pages/dashboard.html.twig');
     }
-    #[Route('/admin/tables', name: 'admin_tables')]
-    public function tables(): Response
+    #[Route('/admin/utilisateurs', name: 'admin_utilisateurs')]
+    public function utilisateurs(): Response
     {
-        return $this->render('admin/pages/tables.html.twig');
+        return $this->render('admin/pages/utilisateurs.html.twig');
+    }
+
+    #[Route('/admin/produits-commandes', name: 'admin_produits_commandes')]
+    public function produitsCommandes(): Response
+    {
+        return $this->render('admin/pages/produits_commandes.html.twig');
+    }
+
+    #[Route('/admin/formations-modules', name: 'admin_formations_modules')]
+    public function formationsModules(): Response
+    {
+        return $this->render('admin/pages/formations_modules.html.twig');
+    }
+
+    #[Route('/admin/dons-associations', name: 'admin_dons_associations')]
+    public function donsAssociations(): Response
+    {
+        return $this->render('admin/pages/dons_associations.html.twig');
+    }
+
+    #[Route('/admin/evenements-sponsors', name: 'admin_evenements_sponsors')]
+    public function evenementsSponsors(): Response
+    {
+        return $this->render('admin/pages/evenements_sponsors.html.twig');
     }
     #[Route('/admin/billing', name: 'admin_billing')]
     public function billing(): Response

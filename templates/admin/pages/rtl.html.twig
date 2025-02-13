@@ -54,61 +54,62 @@
             <span class="nav-link-text me-1">لوحة القيادة</span>
           </a>
         </li>
+        <li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle text-dark" href="#" id="tablesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="material-symbols-rounded opacity-5">table_view</i>
+    <span class="nav-link-text ms-1">Tables</span>
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="tablesDropdown">
+    <li><a class="dropdown-item" href="{{ path('admin_utilisateurs') }}">Utilisateurs</a></li>
+    <li><a class="dropdown-item" href="{{ path('admin_produits_commandes') }}">Produits et Commandes</a></li>
+    <li><a class="dropdown-item" href="{{ path('admin_formations_modules') }}">Formations et Modules</a></li>
+    <li><a class="dropdown-item" href="{{ path('admin_dons_associations') }}">Dons et Associations</a></li>
+    <li><a class="dropdown-item" href="{{ path('admin_evenements_sponsors') }}">Événements et Sponsors</a></li>
+  </ul>
+</li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/tables.html">
-            <i class="material-symbols-rounded opacity-10">table_view</i>
-            <span class="nav-link-text me-1">الجداول</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/billing.html">
+          <a class="nav-link text-dark" href="../admin/billing">
             <i class="material-symbols-rounded opacity-10">receipt_long</i>
             <span class="nav-link-text me-1">الفواتير</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/virtual-reality.html">
+          <a class="nav-link text-dark" href="../admin/virtual-reality">
             <i class="material-symbols-rounded opacity-10">view_in_ar</i>
             <span class="nav-link-text me-1">الواقع الافتراضي</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active bg-gradient-dark text-white" href="../pages/rtl.html">
+          <a class="nav-link active bg-gradient-dark text-white" href="../admin/rtl">
             <i class="material-symbols-rounded opacity-10">format_textdirection_r_to_l</i>
             <span class="nav-link-text me-1">RTL</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/notifications.html">
+          <a class="nav-link text-dark" href="../admin/notifications">
             <i class="material-symbols-rounded opacity-10">notifications</i>
             <span class="nav-link-text me-1">إشعارات</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/profile.html">
+          <a class="nav-link text-dark" href="../admin/profile">
             <i class="material-symbols-rounded opacity-10">person</i>
             <span class="nav-link-text me-1">حساب تعريفي</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/sign-in.html">
+          <a class="nav-link text-dark" href="../admin/sign-in">
             <i class="material-symbols-rounded opacity-10">login</i>
             <span class="nav-link-text me-1">تسجيل الدخول</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/sign-up.html">
+          <a class="nav-link text-dark" href="../admin/sign-up">
             <i class="material-symbols-rounded opacity-10">assignment</i>
             <span class="nav-link-text me-1">اشتراك</span>
           </a>
         </li>
       </ul>
-    </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-      <div class="mx-3">
-        <a class="btn btn-outline-dark mt-4 w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard?ref=sidebarfree" type="button">Documentation</a>
-        <a class="btn bg-gradient-dark w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
-      </div>
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg overflow-x-hidden">

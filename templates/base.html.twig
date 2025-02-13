@@ -16,15 +16,20 @@
             <nav>
                 <ul>
                     <li><a href="{{ path('app_home') }}">Accueil</a></li>
-                    <li><a href="#about" class="scroll-link">À propos</a></li>
-                    <li class="dropdown">
-                        <a href="#">Menu ▾</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('app_produits') }}">Produits</a></li>
-                            <li><a href="{{ path('app_transactions') }}">Transactions</a></li>
-                            <li><a href="{{ path('app_associations') }}">Associations</a></li>
-                            <li><a href="{{ path('app_evenements') }}">Événements</a></li>
-                        </ul>
+<li><a href="#about" class="scroll-link">À propos</a></li>
+<li class="dropdown">
+    <a href="#">Menu ▾</a>
+    <ul class="dropdown-menu">
+        <li><a href="{{ path('app_produits') }}">Produits</a></li>
+        <li><a href="{{ path('app_associations') }}">Associations</a></li>
+        <li><a href="{{ path('app_evenements') }}">Événements</a></li>
+        <li><a href="{{ path('app_commandes') }}">Commandes</a></li>
+        <li><a href="{{ path('app_sponsors') }}">Sponsors</a></li>
+        <li><a href="{{ path('app_dons') }}">Dons</a></li>
+        <li><a href="{{ path('app_formations') }}">Formations</a></li>
+        <li><a href="{{ path('app_modules') }}">Modules</a></li>
+    </ul>
+</li>
                     </li>
                     <li><a href="#contact" class="scroll-link">Contact</a></li>
                     <li><a href="/inscription">Inscription</a></li>
