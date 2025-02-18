@@ -1,0 +1,108 @@
+{% extends 'main/barre.html.twig' %}
+
+{% block body %}
+<div class="container my-5">
+    <h2 class="text-center text-success">{{ module.nomModule }}</h2>
+    <p class="text-center text-muted">{{ module.descriptionModule }}</p>
+
+    <!-- Informations Générales du Module -->
+    <div class="row my-4">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 p-3">
+                <h4 class="text-primary">📌 Informations Générales</h4>
+                <p><strong>Catégorie :</strong> {{ module.categorie }}</p>
+                <p><strong>Niveau :</strong> {{ module.niveau }}</p>
+                <p><strong>Statut :</strong> {{ module.statut ? '✅ Actif' : '❌ Inactif' }}</p>
+                <p><strong>Créé le :</strong> {{ module.datecreationModule|date('d/m/Y') }}</p>
+            </div>
+        </div>
+
+        <!-- Section Statistiques avec Design Amélioré -->
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 p-3">
+                <h4 class="text-primary">📊 Statistiques du Module</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p><strong>Nombre de formations :</strong> {{ totalFormations }}</p>
+                        <p><strong>Durée totale :</strong> {{ dureeformation }} heures</p>
+                    </div>
+                    <!-- Icônes et Design Amélioré -->
+                    <div>
+                        <i class="fas fa-graduation-cap fa-3x text-success"></i>
+                    </div>
+                </div>
+
+          <!-- Calcul de la barre de progression -->
+{% set pourcentageProgression = (totalFormations / module.getNbHeures()) * 100 %}
+
+<!-- Barre de progression -->
+<div class="progress my-3" style="height: 10px;">
+<div class="progress-bar bg-primary" role="progressbar" style="width: {{ pourcentageProgression }}%" aria-valuenow="{{ totalFormations }}" aria-valuemin="0" aria-valuemax="{{ module.getNbHeures() }}">
+</div>      
+  {% set pourcentageProgression = (totalFormations / module.getNbHeures()) * 100 %}
+
+    </div>
+</div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Formations incluses dans le module -->
+    <h3 class="text-center my-4">📚 Formations Incluses</h3>
+    <div class="row g-4">
+        {% for formation in formations %}
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0">
+                    <div class="card-body">
+                        <h5 class="card-title text-success">{{ formation.nomFormation }}</h5>
+                        <p class="card-text">{{ formation.descriptionFormation|slice(0, 100) }}...</p>
+                        <a href="{{ path('app_formations', { id: formation.id }) }}" class="btn btn-outline-success">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">Aucune formation disponible pour ce module.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Section des Avis d'Entreprises -->
+    <h3 class="text-center my-5">📝 Avis des Entreprises</h3>
+    <div class="row g-4">
+        <!-- Avis 1 -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 p-3">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">EcoCycle Solutions</h5>
+                    <p class="card-text">"Cette formation est excellente! Elle a permis à nos employés de renforcer leurs compétences et d’améliorer leur productivité. Nous recommandons vivement!"</p>
+                    <small class="text-muted">Publié le: 12/02/2025</small>
+                </div>
+            </div>
+        </div>
+        <!-- Avis 2 -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 p-3">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">Green Earth Recycling</h5>
+                    <p class="card-text">"Le contenu de la formation était clair, bien structuré et très utile pour nos équipes techniques. Merci pour cette belle initiative!"</p>
+                    <small class="text-muted">Publié le: 05/02/2025</small>
+                </div>
+            </div>
+        </div>
+        <!-- Avis 3 -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 p-3">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">Recytech Industries</h5>
+                    <p class="card-text">"Une formation de grande qualité, avec des formateurs expérimentés. Elle a parfaitement répondu à nos attentes et besoins." </p>
+                    <small class="text-muted">Publié le: 01/02/2025</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

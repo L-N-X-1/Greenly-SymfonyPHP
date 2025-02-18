@@ -1,0 +1,60 @@
+{% extends 'admin/pages/barreforum.html.twig' %}
+
+{% block body %}
+
+<div class="container forum-container mt-5">
+  <h2>Modifier la Formation</h2>
+  
+  {# Modifier l'action pour pointer vers la route de modification et afficher le bon bouton #}
+  {{ form_start(form, {'method': 'post', 'action': path('modifier_formation', {'id': form.vars.value.id}) , 'attr': {'novalidate': 'novalidate'}}) }}
+
+  <div class="mb-3 mt-4"> <!-- Ajout de mt-4 pour espacer le titre du premier champ -->
+    {{ form_label(form.nom_formation, "Nom de la Formation", {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.nom_formation, {'attr': {'class': 'form-control'}}) }}
+    <div class="error-message">{{ form_errors(form.nom_formation) }}</div>
+  </div>
+
+  <div class="mb-3">
+    {{ form_label(form.description_formation, "Description", {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.description_formation, {'attr': {'class': 'form-control'}}) }}
+    <div class="error-message">{{ form_errors(form.description_formation) }}</div>
+  </div>
+
+  <div class="mb-3">
+    {{ form_label(form.duree_formation, "Durée", {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.duree_formation, {'attr': {'class': 'form-control'}}) }}
+    <div class="error-message">{{ form_errors(form.duree_formation) }}</div>
+  </div>
+
+  <div class="mb-3">
+    {{ form_label(form.mode_formation, "Mode de Formation", {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.mode_formation, {'attr': {'class': 'form-control'}}) }}
+    <div class="error-message">{{ form_errors(form.mode_formation) }}</div>
+  </div>
+
+  <div class="mb-3">
+    {{ form_label(form.datedebut_formation, "Date de Début", {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.datedebut_formation, {'attr': {'class': 'form-control'}}) }}
+    <div class="error-message">{{ form_errors(form.datedebut_formation) }}</div>
+  </div>
+
+  <div class="mb-3">
+    {{ form_label(form.datefin_formation, "Date de Fin", {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.datefin_formation, {'attr': {'class': 'form-control'}}) }}
+    <div class="error-message">{{ form_errors(form.datefin_formation) }}</div>
+  </div>
+
+  <div class="mb-3">
+    {{ form_label(form.module, "Module", {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.module, {'attr': {'class': 'form-control'}}) }}
+    <div class="error-message">{{ form_errors(form.module) }}</div>
+  </div>
+
+  <button type="submit" class="btn btn-success">
+    {% if form.vars.value.id is defined %}Sauvegarder les modifications{% else %}Ajouter{% endif %}
+  </button>
+
+  {{ form_end(form) }}
+</div>
+
+{% endblock %}

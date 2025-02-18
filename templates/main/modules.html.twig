@@ -1,0 +1,29 @@
+{% extends 'main/barre.html.twig' %}
+
+{% block body %}
+
+
+<div class="container">
+    <h2 class="text-center my-4">📚 Nos Modules de Formation</h2>
+    
+    <div class="row g-4"> {# Ajout de 'g-4' pour l'espacement horizontal #}
+        {% for module in modules %}
+            <div class="col-md-4 mb-4"> {# Ajout de 'mb-4' pour l'espacement vertical #}
+                <div class="card shadow-lg border-0">
+                    <div class="card-body">
+                        <h4 class="card-title text-success">{{ module.nomModule }}</h4>
+                        <p class="card-text">{{ module.descriptionModule|slice(0, 100) }}...</p>
+                        <p><strong>📅 Durée :</strong> {{ module.NbHeures }} heures</p>
+                        <p><strong>📌 Formations incluses :</strong> {{ module.formations|length }}</p>
+                        <a href="{{ path('module_details', { id: module.id }) }}" class="btn btn-outline-success">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center">Aucun module disponible.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+

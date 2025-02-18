@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Consommation et Production Responsable</h1>
+            <p>Agissons ensemble pour un avenir durable.</p>
+            <a href="#about" class="btn">En savoir plus</a>
+        </div>
+    </section>
+
+    
+    <section id="services">
+        <h2>Nos Services</h2>
+        <div class="service">
+            <img src="{{ asset('images/service1.jpg') }}" alt="Service 1">
+            <h3>Gestion des dechets</h3>
+        </div>
+        <div class="service">
+            <img src="{{ asset('images/service2.jpg') }}" alt="Service 2">
+            <h3>Recyclage et transformation</h3>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'main/barre.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2 class="text-success">{{ formation.nomFormation }}</h2>
+        <p class="lead text-muted">Rejoignez cette formation pour acquérir de nouvelles compétences pratiques et devenir un expert en recyclage responsable.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm border-0 rounded-lg">
+                <div class="card-body">
+
+                    <!-- Description Section -->
+                    <div class="mb-4">
+                        <h5 class="card-title text-primary font-weight-bold">Description de la formation</h5>
+                        <p class="card-text">{{ formation.descriptionFormation }}</p>
+                    </div>
+
+                    <!-- Durée et Informations supplémentaires -->
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card shadow-sm p-3 mb-2 bg-white rounded border">
+                                <h6 class="card-title text-dark">Durée</h6>
+                                <p class="card-text">{{ formation.dureeFormation }} heures</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm p-3 mb-2 bg-white rounded border">
+                                <h6 class="card-title text-dark">Mode de formation</h6>
+                                <p class="card-text">{{ formation.modeFormation }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm p-3 mb-2 bg-white rounded border">
+                                <h6 class="card-title text-dark">Module</h6>
+                                <p class="card-text">
+                                    <a href="{{ path('module_details', {'id': formation.module.id}) }}" class="text-info font-weight-bold">{{ formation.module.nomModule }}</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dates de la formation -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card shadow-sm p-3 mb-2 bg-white rounded border">
+                                <h6 class="card-title text-dark">Date de début</h6>
+                                <p class="card-text">{{ formation.datedebutFormation|date('d/m/Y') }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card shadow-sm p-3 mb-2 bg-white rounded border">
+                                <h6 class="card-title text-dark">Date de fin</h6>
+                                <p class="card-text">{{ formation.datefinFormation|date('d/m/Y') }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Détails du Module -->
+                    <div class="mb-4">
+                        <h5 class="mt-4 text-info font-weight-bold">Détails du Module</h5>
+                        <div class="card shadow-sm p-3 mb-2 bg-white rounded border">
+                            <p class="card-text">{{ formation.module.descriptionModule }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonials Section -->
+                    <div class="mb-4">
+                        <h5 class="mt-4 text-warning font-weight-bold">Ce que disent nos anciens participants</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-quote-left"></i> "Cette formation a changé ma vision du recyclage, je suis maintenant un véritable ambassadeur pour l'environnement!" - <em>Jean Dupont</em></li>
+                            <li><i class="fas fa-quote-left"></i> "L'apprentissage est complet et très accessible. J'ai appris beaucoup de choses utiles pour mon quotidien." - <em>Marie Lefevre</em></li>
+                        </ul>
+                    </div>
+
+                    <!-- Statistics Section Design -->
+                    <div class="mb-4">
+                        <h5 class="mt-4 text-success font-weight-bold">Statistiques sur la Formation</h5>
+                        <div class="row">
+                            <!-- Taux de Réussite -->
+                            <div class="col-md-6">
+                                <div class="card shadow-sm rounded-lg border-0 p-4 bg-light">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-trophy fa-3x text-warning"></i>
+                                        <div class="ml-3">
+                                            <p class="card-text"><strong>Taux de réussite:</strong> 98%</p>
+                                            <p class="card-text text-muted">des participants réussissent à obtenir leur certificat.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Nombre de Participants -->
+                            <div class="col-md-6">
+                                <div class="card shadow-sm rounded-lg border-0 p-4 bg-light">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-users fa-3x text-info"></i>
+                                        <div class="ml-3">
+                                            <p class="card-text"><strong>Participants:</strong> 500+</p>
+                                            <p class="card-text text-muted">Employés formés cette année!</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
