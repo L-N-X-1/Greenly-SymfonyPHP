@@ -1,16 +1,30 @@
 {% extends 'main/barre.html.twig' %}
 
 {% block body %}
+<style>
+  .card-img-top {
+      height: 200px; /* Uniformiser la hauteur des images */
+      object-fit: cover; /* Recadrer l'image sans déformation */
+  }
+  .card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+  }
+  .card-body {
+      flex-grow: 1;
+  }
+</style>
+
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <p>Nombre de formations disponibles : {{ formations|length }}</p> {# Debug pour voir combien de formations il y a #}
-
+    <p>Nombre de formations disponibles : {{ formations|length }}</p>
+    
     {% set images = ['formation1.jpg', 'formation2.jpg', 'formation3.jpg', 'formation4.jpg', 'formation5.jpg', 'formation6.jpg'] %}
     
     {% for formation in formations %}
       <div class="col-md-4 mb-4">
         <div class="card shadow-sm border-0 rounded-lg overflow-hidden">
-          <!-- Assigner une image en fonction de l'index de la formation -->
           <img src="{{ asset('images/' ~ images[loop.index0 % images|length]) }}" 
                class="card-img-top img-fluid rounded-0" 
                alt="Formation Image">
