@@ -36,6 +36,8 @@ class ModuleType extends AbstractType
             'Plastique' => 'Plastique',
             'Électronique' => 'Électronique',
             'Papier' => 'Papier',
+            'Vetements' => 'Vetements',
+            'Meubles' => 'Meubles',
             'Métaux' => 'Métaux',
         ],
         'placeholder' => 'Sélectionner une option',  // Correct placement of the placeholder
