@@ -1,0 +1,27 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            {{ form_label(form.name, 'Nom complet', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre nom'}}) }}
+            {{ form_errors(form.name) }}
+        </div>
+
+        <div class="col-md-12 mb-3">
+            {{ form_label(form.phoneNumber, 'Numéro de téléphone', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.phoneNumber, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre numéro de téléphone'}}) }}
+            {{ form_errors(form.phoneNumber) }}
+        </div>
+
+        <div class="col-md-12 mb-4">
+            {{ form_label(form.event, 'Événement', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.event, {'attr': {'class': 'form-select'}}) }}
+            {{ form_errors(form.event) }}
+        </div>
+    </div>
+
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-success btn-lg">
+            <i class="fas fa-check-circle me-2"></i>{{ button_label|default('S\'inscrire') }}
+        </button>
+    </div>
+{{ form_end(form) }}

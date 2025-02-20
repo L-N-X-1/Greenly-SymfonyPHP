@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Attendee index{% endblock %}
+
+{% block body %}
+    <h1>Attendee index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>PhoneNumber</th>
+                <th>Event</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for attendee in attendees %}
+            <tr>
+                <td>{{ attendee.id }}</td>
+                <td>{{ attendee.name }}</td>
+                <td>{{ attendee.phoneNumber }}</td>
+                <td>{{ attendee.event ? attendee.event.eventName : 'No event' }}</td>
+                <td>
+                    <a href="{{ path('app_attendee_show', {'id': attendee.id}) }}">show</a>
+                    <a href="{{ path('app_attendee_edit', {'id': attendee.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_attendee_new') }}">Create new</a>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SponsorRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SponsorRepository::class)]
 class Sponsor
@@ -11,24 +12,26 @@ class Sponsor
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $sponsor_id = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Veuillez entrer votre nom")]
     private ?string $sponsor_name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sponsors')]
-    #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'event_id')]
-    private ?Event $event = null;
-
     #[ORM\Column]
-    private ?int $product_id = null;
-
-    #[ORM\Column]
+    #[Assert\NotBlank(message:"Veuillez entrer le montant")]
+    #[Assert\Type(
+        type: "integer",
+        message: "Le montant doit être un nombre entier."    )]
     private ?int $montant = null;
 
-    public function getSponsorId(): ?int
+    #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'sponsors')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Event $event = null;
+
+    public function getId(): ?int
     {
-        return $this->sponsor_id;
+        return $this->id;
     }
 
     public function getSponsorName(): ?string
@@ -42,28 +45,6 @@ class Sponsor
         return $this;
     }
 
-    public function getEvent(): ?Event
-    {
-        return $this->event;
-    }
-
-    public function setEvent(?Event $event): static
-    {
-        $this->event = $event;
-        return $this;
-    }
-
-    public function getProductId(): ?int
-    {
-        return $this->product_id;
-    }
-
-    public function setProductId(int $product_id): static
-    {
-        $this->product_id = $product_id;
-        return $this;
-    }
-
     public function getMontant(): ?int
     {
         return $this->montant;
@@ -72,6 +53,17 @@ class Sponsor
     public function setMontant(int $montant): static
     {
         $this->montant = $montant;
+        return $this;
+    }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }   
+
+    public function setEvent(?Event $event): static
+    {
+        $this->event = $event;
         return $this;
     }
 }

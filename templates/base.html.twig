@@ -22,9 +22,9 @@
     <ul class="dropdown-menu">
         <li><a href="{{ path('app_produits') }}">Produits</a></li>
         <li><a href="{{ path('app_associations') }}">Associations</a></li>
-        <li><a href="{{ path('app_evenements') }}">Événements</a></li>
+        <li><a href="{{ path('app_event_index') }}">Événements</a></li>
         <li><a href="{{ path('app_commandes') }}">Commandes</a></li>
-        <li><a href="{{ path('app_sponsors') }}">Sponsors</a></li>
+        <li><a href="{{ path('app_sponsor_new') }}">Sponsors</a></li>
         <li><a href="{{ path('app_dons') }}">Dons</a></li>
         <li><a href="{{ path('app_formations') }}">Formations</a></li>
         <li><a href="{{ path('app_modules') }}">Modules</a></li>
@@ -41,13 +41,6 @@
 
     <!-- 🟢 CONTENU DE LA PAGE -->
     <main>
-        <div class="hero">
-            <img src="{{ asset('images/accueil.png') }}" alt="Page d'accueil" class="img-fluid w-100">
-            <div class="hero-text">
-                <h1>Bienvenue sur notre plateforme</h1>
-                <p>Engageons-nous ensemble pour un avenir plus durable.</p>
-            </div>
-        </div>
 
         {% block body %}{% endblock %}
 
