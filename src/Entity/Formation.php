@@ -6,6 +6,7 @@ use App\Repository\FormationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
@@ -45,6 +46,17 @@ class Formation
     #[Assert\Type("\DateTimeInterface")]
 
     private ?\DateTimeInterface $datefin_formation = null;
+    #[Assert\Callback]
+public function validateDateFin(ExecutionContextInterface $context): void
+{
+    if ($this->datedebut_formation && $this->datefin_formation) {
+        if ($this->datefin_formation <= $this->datedebut_formation) {
+            $context->buildViolation("La date de fin doit être supérieure à la date de début.")
+                ->atPath('datefin_formation')
+                ->addViolation();
+        }
+    }
+}
 
     #[ORM\ManyToOne(inversedBy: 'formations')]
     #[Assert\NotNull(message: "Le module est requis.")]

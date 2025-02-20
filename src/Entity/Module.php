@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 
 #[ORM\Entity(repositoryClass: ModuleRepository::class)]
 class Module
@@ -54,6 +56,31 @@ class Module
     #[Assert\NotBlank(message: "La date de création est obligatoire")]
     #[Assert\Type(type: \DateTimeInterface::class, message: "La date de création doit être valide")]
         private ?\DateTimeInterface $datecreation_module = null;
+       
+        #[Assert\Callback]
+        public function validateDateCreation(ExecutionContextInterface $context): void
+{
+    if ($this->datecreation_module instanceof \DateTimeInterface) {
+        $dateSaisie = trim($this->datecreation_module->format('m/d/Y'));
+        
+        // Obtenir la date d'hier avec le bon fuseau horaire
+        $dateHier = (new \DateTime('now', new \DateTimeZone('Europe/Paris')))
+            ->modify('-1 day') // Soustraire un jour
+            ->format('m/d/Y');
+
+        dump($dateSaisie, $dateHier); // Debugging
+
+        if ($dateSaisie !== $dateHier) {
+            $context->buildViolation("La date de création doit être la date d'ajourd hui : $dateHier")
+                ->atPath('datecreation_module')
+                ->addViolation();
+        }
+    }
+}
+
+
+        
+        
 
     /**
      * @var Collection<int, Formation>

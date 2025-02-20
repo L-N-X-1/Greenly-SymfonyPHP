@@ -7,6 +7,7 @@ use App\Entity\Module;
 use App\Form\ModuleType;
 use Doctrine\ORM\EntityManagerInterface; // Ajouter cette ligne
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route; // Remarque : Utilise la bonne annotation si tu es sur Symfony 5+
@@ -95,28 +96,22 @@ final class ModuleController extends AbstractController
         ]);
     }
     
-
     #[Route('/module/supprimer/{id}', name: 'supprimer_module')]
-    public function supprimerModule(int $id): Response
+    public function supprimerModule(int $id): RedirectResponse
     {
-        // Récupérer le module à supprimer
+        dump($id); // Vérifier l'ID passé
         $module = $this->entityManager->getRepository(Module::class)->find($id);
-
-        // Si le module n'existe pas, rediriger vers la liste des modules
-        if (!$module) {
+        dump($module); // Vérifier quel module est récupéré
+    
+        if ($module) {
+            $this->entityManager->remove($module);
+            $this->entityManager->flush();
+    
+            $this->addFlash('success', 'Module supprimé avec succès');
+        } else {
             $this->addFlash('error', 'Module non trouvé');
-            return $this->redirectToRoute('app_module');
         }
-
-        // Supprimer le module
-        $this->entityManager->remove($module);
-        $this->entityManager->flush();
-
-        // Ajouter un message flash pour confirmer la suppression
-        $this->addFlash('success', 'Module supprimé avec succès');
-
-        // Rediriger vers la liste des formations et modules
+    
         return $this->redirectToRoute('admin_formations_modules');
     }
-
 }
