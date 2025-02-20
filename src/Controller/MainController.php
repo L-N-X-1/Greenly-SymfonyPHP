@@ -27,11 +27,6 @@ class MainController extends AbstractController
         return $this->render('main/associations.html.twig');
     }
 
-    #[Route('/evenements', name: 'app_evenements')]
-    public function evenements(): Response
-    {
-        return $this->render('main/evenements.html.twig');
-    }
     #[Route('/sponsors', name: 'app_sponsors')]
     public function sponsors(): Response
     {

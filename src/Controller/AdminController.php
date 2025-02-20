@@ -5,6 +5,13 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\EventRepository;
+use App\Repository\SponsorRepository;
+use App\Repository\AttendeeRepository;
+use App\Entity\Attendee;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Form\AttendeeType;
 
 class AdminController extends AbstractController
 {
@@ -38,10 +45,29 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin/evenements-sponsors', name: 'admin_evenements_sponsors')]
-    public function evenementsSponsors(): Response
+    public function evenementsSponsors(
+        EventRepository $eventRepository, 
+        SponsorRepository $sponsorRepository,
+        AttendeeRepository $attendeeRepository
+    ): Response
     {
-        return $this->render('admin/pages/evenements_sponsors.html.twig');
+        return $this->render('admin/pages/evenements_sponsors.html.twig', [
+            'events' => $eventRepository->findAll(),
+            'sponsors' => $sponsorRepository->findAll(),
+            'attendees' => $attendeeRepository->findAll(),
+        ]);
     }
+
+    #[Route('/admin/attendee/delete/{id}', name: 'app_attendee_delete')]
+    public function deleteAttendee(Attendee $attendee, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($attendee);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Participant supprimé avec succès.');
+        return $this->redirectToRoute('admin_evenements_sponsors');
+    }
+
     #[Route('/admin/billing', name: 'admin_billing')]
     public function billing(): Response
     {

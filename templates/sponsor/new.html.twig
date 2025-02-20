@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Sponsor{% endblock %}
+
+{% block body %}
+    <style>
+        h1 {
+            text-align: center;
+        }
+        .navbar {
+            background-color: rgba(46, 125, 50, 0.9);
+            padding: 15px;
+            margin-bottom: 0;
+            border-radius: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .navbar-brand, .navbar .nav-link {
+            color: #fff;
+        }
+
+        .navbar .nav-link:hover {
+            color: #c8e6c9;
+        }
+        .page-header {
+            background: linear-gradient(45deg, #2e7d32, #388e3c);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .page-header h1 {
+            font-weight: 600;
+            margin: 0;
+        }
+        form {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #d4edda; /* Light green background */
+        }
+         .back-btn {
+            display: block;
+            width: 100px;
+            margin: 10px auto 0; /* Centers the button */
+            text-align: center;
+        }
+    </style>
+
+    <div class="hero">
+            <img src="{{ asset('images/accueil.png') }}" alt="Page d'accueil" class="img-fluid w-100">
+            <div class="hero-text">
+                <h1>Soyez notre sponsor</h1>
+                <p>Engageons-nous ensemble pour un avenir plus durable.</p>
+            </div>
+        </div>
+
+    <div class="card-body px-4 pb-2">
+        {{ include('sponsor/_form.html.twig') }}
+    </div>
+
+    <a href="{{ path('app_home') }}" class="btn btn-light back-btn" >back</a>
+{% endblock %}
