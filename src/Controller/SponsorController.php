@@ -17,7 +17,7 @@ final class SponsorController extends AbstractController
     #[Route(name: 'app_sponsor_index', methods: ['GET'])]
     public function index(SponsorRepository $sponsorRepository): Response
     {
-        return $this->render('sponsor/index.html.twig', [
+        return $this->render('attendee/index.html.twig', [
             'sponsors' => $sponsorRepository->findAll(),
         ]);
     }
@@ -33,7 +33,7 @@ final class SponsorController extends AbstractController
             $entityManager->persist($sponsor);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_sponsor_index');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('sponsor/new.html.twig', [

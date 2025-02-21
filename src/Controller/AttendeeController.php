@@ -47,9 +47,7 @@ final class AttendeeController extends AbstractController
             $this->addFlash('success', 'Vous êtes maintenant inscrit à l\'événement!');
             
             // Render the events page directly
-            return $this->render('main/evenements.html.twig', [
-                'events' => $eventRepository->findAll(),
-            ]);
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('attendee/new.html.twig', [
