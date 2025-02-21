@@ -59,25 +59,24 @@ class Module
        
         #[Assert\Callback]
         public function validateDateCreation(ExecutionContextInterface $context): void
-{
-    if ($this->datecreation_module instanceof \DateTimeInterface) {
-        $dateSaisie = trim($this->datecreation_module->format('m/d/Y'));
+        {
+            if ($this->datecreation_module instanceof \DateTimeInterface) {
+                $dateSaisie = trim($this->datecreation_module->format('m/d/Y'));
         
-        // Obtenir la date d'hier avec le bon fuseau horaire
-        $dateHier = (new \DateTime('now', new \DateTimeZone('Europe/Paris')))
-            ->modify('-1 day') // Soustraire un jour
-            ->format('m/d/Y');
-
-        dump($dateSaisie, $dateHier); // Debugging
-
-        if ($dateSaisie !== $dateHier) {
-            $context->buildViolation("La date de création doit être la date d'ajourd hui : $dateHier")
-                ->atPath('datecreation_module')
-                ->addViolation();
+                // Obtenir la date d'aujourd'hui avec le bon fuseau horaire
+                $dateAujourdHui = (new \DateTime('now', new \DateTimeZone('Europe/Paris')))
+                    ->format('m/d/Y');
+        
+                dump($dateSaisie, $dateAujourdHui); // Debugging
+        
+                if ($dateSaisie !== $dateAujourdHui) {
+                    $context->buildViolation("La date de création doit être la date d'aujourd'hui : $dateAujourdHui")
+                        ->atPath('datecreation_module')
+                        ->addViolation();
+                }
+            }
         }
-    }
-}
-
+        
 
         
         
