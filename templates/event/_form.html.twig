@@ -1,32 +1,32 @@
 {{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
     <div class="row">
         <div class="col-md-6 mb-3">
-            {{ form_label(form.event_name, "Numéro d'inscription") }}
+            {{ form_label(form.event_name, "Nom de l'evenement") }}
             {{ form_widget(form.event_name, {'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.event_name) }}
         </div>
         <div class="col-md-6 mb-3">
-            {{ form_label(form.event_date, "Numéro d'inscription") }}
+            {{ form_label(form.event_date, "La date de l'evenement") }}
             {{ form_widget(form.event_date, {'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.event_date) }}
         </div>
         <div class="col-md-6 mb-3">
-            {{ form_label(form.event_location, "Numéro d'inscription") }}
+            {{ form_label(form.event_location, "Event location") }}
             {{ form_widget(form.event_location, {'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.event_location) }}
         </div>
         <div class="col-md-6 mb-3">
-            {{ form_label(form.event_status, "Numéro d'inscription") }}
+            {{ form_label(form.event_status, "Status de l'evenement") }}
             {{ form_widget(form.event_status, {'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.event_status) }}
         </div>
         <div class="col-12 mb-3">
-           {{ form_label(form.event_description, "Numéro d'inscription") }}
+           {{ form_label(form.event_description, "Event description") }}
             {{ form_widget(form.event_description, {'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.event_description) }}
         </div>
         <div class="col-12 mb-3">
-            {{ form_label(form.organizer, "Numéro d'inscription") }}
+            {{ form_label(form.organizer, "Organis  ateur") }}
             {{ form_widget(form.organizer, {'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.organizer) }}
         </div>

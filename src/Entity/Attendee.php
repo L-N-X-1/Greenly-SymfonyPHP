@@ -30,6 +30,7 @@ class Attendee
     private ?string $phoneNumber = null;
 
     #[ORM\ManyToOne(inversedBy: 'attendees')]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?Event $event = null;
 
     public function getId(): ?int
