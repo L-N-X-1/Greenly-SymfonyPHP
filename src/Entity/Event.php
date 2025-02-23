@@ -42,6 +42,11 @@ class Event
     #[Assert\NotBlank(message: "Veuillez choisir une gouvernorat")]
     private ?string $event_location = null;
 
+
+    public const STATUS_EN_COURS = 'En cours';
+    public const STATUS_PLANIFIE = 'Planifié';
+    public const STATUS_ACHEVE = 'Achevée';
+
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le statut de l'événement est requis.")]
     private ?string $event_status = null;
@@ -126,7 +131,7 @@ class Event
         return $this->event_status;
     }
 
-    public function setEventStatus(string $event_status): static
+    public function setEventStatus(string $event_status): self
     {
         $this->event_status = $event_status;
         return $this;

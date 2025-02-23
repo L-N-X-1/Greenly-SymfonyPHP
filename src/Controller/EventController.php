@@ -15,10 +15,10 @@ use Symfony\Component\Routing\Attribute\Route;
 final class EventController extends AbstractController
 {
     #[Route(name: 'app_event_index', methods: ['GET'])]
-    public function index(EventRepository $eventRepository): Response
+    public function index(EventRepository $EventRepository): Response
     {
         return $this->render('main/evenements.html.twig', [
-            'events' => $eventRepository->findAll(),
+            'events' => $EventRepository->findNonAcheves(),
         ]);
     }
 
