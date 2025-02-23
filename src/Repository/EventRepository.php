@@ -16,6 +16,16 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    public function findNonAcheves(): array
+{
+    return $this->createQueryBuilder('e')
+        ->where('e.event_status != :acheve')
+        ->setParameter('acheve', Event::STATUS_ACHEVE)
+        ->getQuery()
+        ->getResult();
+}
+
+
     //    /**
     //     * @return Event[] Returns an array of Event objects
     //     */

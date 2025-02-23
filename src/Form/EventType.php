@@ -54,13 +54,13 @@ class EventType extends AbstractType
                 ],
                 
             ])
-            ->add('event_status',  ChoiceType::class, [
+            ->add('event_status', ChoiceType::class, [
                 'choices' => [
-                    'En cours' => 'En cours',
-                    'Planifié' => 'Planifié',
+                    'En cours' => Event::STATUS_EN_COURS,
+                    'Planifié' => Event::STATUS_PLANIFIE,
+                    'Achevée' => Event::STATUS_ACHEVE,
                 ]
             ])
-
             
             ->add('organizer', EntityType::class, [
                 'class' => AppUser::class,
