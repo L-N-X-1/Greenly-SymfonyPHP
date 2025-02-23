@@ -24,6 +24,11 @@ class Sponsor
         type: "integer",
         message: "Le montant doit être un nombre entier."    )]
     private ?int $montant = null;
+    
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: "Veuillez entrer votre adresse e-mail")]
+    #[Assert\Email(message: "Veuillez entrer une adresse e-mail valide")]
+    private ?string $email = null;
 
     #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'sponsors')]
     #[ORM\JoinColumn(nullable: false)]
@@ -53,6 +58,17 @@ class Sponsor
     public function setMontant(int $montant): static
     {
         $this->montant = $montant;
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
         return $this;
     }
 

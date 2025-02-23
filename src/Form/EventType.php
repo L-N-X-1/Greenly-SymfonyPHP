@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class EventType extends AbstractType
 {
@@ -19,8 +20,10 @@ class EventType extends AbstractType
             ->add('event_name', null, [
                 'label' => 'Nom de l\'événement'
             ])
-            ->add('event_date', null, [
-                'label' => 'Date'
+            ->add('event_date', DateType::class, [
+                'label' => 'Date',
+                'widget' => 'single_text', // This allows a simple HTML5 date input
+                'required' => true,
             ])
             ->add('event_description', null, [
                 'label' => 'Description'
