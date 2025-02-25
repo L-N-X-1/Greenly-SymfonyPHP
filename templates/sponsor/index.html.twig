@@ -12,6 +12,7 @@
                 <th>Id</th>
                 <th>Sponsor Name</th>
                 <th>Montant</th>
+                <th>Email</th>
                 <th>Event</th>
                 <th>Actions</th>
             </tr>
@@ -22,6 +23,7 @@
                 <td>{{ sponsor.id }}</td>
                 <td>{{ sponsor.SponsorName }}</td>
                 <td>{{ sponsor.montant }}</td>
+                <td>{{ sponsor.email }}</td>
                 <td>{{ sponsor.event ? sponsor.event.eventName : '' }}</td>
                 <td class="action-links">
                     <a href="{{ path('app_sponsor_show', {'id': sponsor.id}) }}" class="show">Show</a>

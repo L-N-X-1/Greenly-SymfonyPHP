@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>PhoneNumber</th>
+                <th>Email</th>
                 <th>Event</th>
                 <th>actions</th>
             </tr>
@@ -21,6 +22,7 @@
                 <td>{{ attendee.id }}</td>
                 <td>{{ attendee.name }}</td>
                 <td>{{ attendee.phoneNumber }}</td>
+                <td>{{ attendee.email }}</td>
                 <td>{{ attendee.event ? attendee.event.eventName : 'No event' }}</td>
                 <td>
                     <a href="{{ path('app_attendee_show', {'id': attendee.id}) }}">show</a>

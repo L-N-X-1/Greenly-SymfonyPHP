@@ -28,6 +28,11 @@ class Attendee
         message: "please make sure de votre phone number"
     )]
     private ?string $phoneNumber = null;
+    
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: "Veuillez entrer votre adresse e-mail")]
+    #[Assert\Email(message: "Veuillez entrer une adresse e-mail valide")]
+    private ?string $email = null;
 
     #[ORM\ManyToOne(inversedBy: 'attendees')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
@@ -59,6 +64,17 @@ class Attendee
     {
         $this->phoneNumber = $phoneNumber;
 
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
         return $this;
     }
 
