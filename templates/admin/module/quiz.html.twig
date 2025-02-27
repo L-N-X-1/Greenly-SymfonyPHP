@@ -1,0 +1,75 @@
+<style>
+    /* Animation d'apparition des questions */
+    .card {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.6s ease-in-out forwards;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Effet au survol des questions */
+    .card:hover {
+        transform: scale(1.02);
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    /* Effet sur le bouton de soumission */
+    .btn-success:hover {
+        animation: bounce 0.3s ease-in-out;
+    }
+    
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-5px);
+        }
+    }
+</style>
+
+<div class="container my-5 p-4 bg-light rounded shadow-lg">
+    <h2 class="text-center text-success fw-bold mb-4">Quiz - {{ categorie|capitalize }}</h2>
+
+    {% if questions is not empty %}
+        <form method="POST" action="{{ path('quiz_result', { categorie: categorie }) }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('quiz_form') }}">
+
+            {% for question_index, question in questions %}
+                <div class="card shadow-sm p-4 mb-4 border-0" style="background-color: #f8f9fa; animation-delay: {{ question_index * 0.1 }}s;">
+                    <h5 class="text-primary fw-bold">❓ {{ question.question }}</h5>
+                    <hr class="mb-3" style="border-top: 2px solid #28a745;">
+
+                    {% for choix_index, choix in question.options %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio"
+                                   id="q{{ question_index }}_{{ choix_index }}"
+                                   name="q{{ question_index }}"
+                                   value="{{ choix_index }}" required>
+                            <label class="form-check-label" for="q{{ question_index }}_{{ choix_index }}">
+                                {{ choix }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <!-- Bouton de soumission -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-lg btn-success px-5 py-2 fw-bold shadow">Soumettre les réponses</button>
+            </div>
+        </form>
+    {% else %}
+        <p class="text-danger text-center fw-bold mt-4">⚠️ Aucune question trouvée pour cette catégorie.</p>
+    {% endif %}
+</div>
