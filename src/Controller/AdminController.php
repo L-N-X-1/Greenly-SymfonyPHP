@@ -28,35 +28,45 @@ class AdminController extends AbstractController
         return $this->render('admin/pages/produits_commandes.html.twig');
     }
 
-    #[Route('/admin/formations-modules', name: 'admin_formations_modules')]#[Route('/admin/formations-modules', name: 'admin_formations_modules')]
+    #[Route('/admin/formations-modules', name: 'admin_formations_modules')]
     public function formationsModules(FormationRepository $formationRepository, ModuleRepository $moduleRepository, Request $request): Response
     {
         // Nombre d'éléments par page
         $limit = 10;
-    
+        
         // Pagination des modules
         $currentPageModules = max(1, $request->query->getInt('module_page', 1));
         $offsetModules = ($currentPageModules - 1) * $limit;
     
+        // Critères de tri
+        $sortBy = $request->query->get('sort_by', 'nom_module'); // Défaut sur 'nomModule'
+        $sortOrder = $request->query->get('sort_order', 'asc'); // Défaut sur 'asc'
+    
         $modules = $moduleRepository->createQueryBuilder('m')
+            ->orderBy("m.$sortBy", $sortOrder) // Tri par le champ choisi
             ->setFirstResult($offsetModules)
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
-    
+        
         $totalModules = $moduleRepository->count([]);
         $totalPagesModules = ceil($totalModules / $limit);
-    
+        
         // Pagination des formations
         $currentPageFormations = max(1, $request->query->getInt('formation_page', 1));
         $offsetFormations = ($currentPageFormations - 1) * $limit;
     
+        // Tri des formations
+        $formationsSortBy = $request->query->get('formations_sort_by', 'nom_formation');
+        $formationsSortOrder = $request->query->get('formations_sort_order', 'asc');
+    
         $formations = $formationRepository->createQueryBuilder('f')
+            ->orderBy("f.$formationsSortBy", $formationsSortOrder) // Tri des formations
             ->setFirstResult($offsetFormations)
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
-    
+        
         $totalFormations = $formationRepository->count([]);
         $totalPagesFormations = ceil($totalFormations / $limit);
     
@@ -67,6 +77,10 @@ class AdminController extends AbstractController
             'totalPagesModules' => $totalPagesModules,
             'currentPageFormations' => $currentPageFormations,
             'totalPagesFormations' => $totalPagesFormations,
+            'sortBy' => $sortBy,
+            'sortOrder' => $sortOrder,
+            'formationsSortBy' => $formationsSortBy,
+            'formationsSortOrder' => $formationsSortOrder,
         ]);
     }
     

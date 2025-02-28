@@ -106,6 +106,41 @@
         </div>
       </div>
     </nav>
+    <!-- Formulaire de tri pour les formations -->
+<!-- Formulaire de tri pour les formations -->
+<form method="get" action="{{ path('admin_formations_modules') }}" class="d-flex align-items-center">
+    <label class="form-label me-2" for="formations_sort_by" style="font-size: 0.875rem; width: 180px;">Trier les formations par :</label>
+    <select id="formations_sort_by" name="formations_sort_by" class="form-select form-control-sm" style="font-size: 0.875rem;">
+        <option value="nom_formation" {% if formationsSortBy == 'nom_formation' %}selected{% endif %}>Nom de la formation</option>
+        <option value="duree_formation" {% if formationsSortBy == 'duree_formation' %}selected{% endif %}>Durée</option>
+        <option value="datedebut_formation" {% if formationsSortBy == 'datedebut_formation' %}selected{% endif %}>Date de début</option>
+    </select>
+
+    <select name="formations_sort_order" class="form-select form-control-sm ms-2" style="font-size: 0.875rem;">
+        <option value="asc" {% if formationsSortOrder == 'asc' %}selected{% endif %}>Ascendant</option>
+        <option value="desc" {% if formationsSortOrder == 'desc' %}selected{% endif %}>Descendant</option>
+    </select>
+
+    <button type="submit" class="btn btn-outline-primary btn-sm ms-2">Appliquer</button>
+</form>
+
+<!-- Formulaire de tri pour les modules -->
+<form method="get" action="{{ path('admin_formations_modules') }}" class="d-flex align-items-center mt-2">
+    <label class="form-label me-2" for="sort_by" style="font-size: 0.875rem; width: 180px;">Trier les modules par :</label>
+    <select id="sort_by" name="sort_by" class="form-select form-control-sm" style="font-size: 0.875rem;">
+        <option value="nom_module" {% if sortBy == 'nom_module' %}selected{% endif %}>Nom du module</option>
+        <option value="nb_heures" {% if sortBy == 'nb_heures' %}selected{% endif %}>Durée</option>
+        <option value="datecreation_module" {% if sortBy == 'datecreation_module' %}selected{% endif %}>Date de création</option>
+    </select>
+
+    <select name="sort_order" class="form-select form-control-sm ms-2" style="font-size: 0.875rem;">
+        <option value="asc" {% if sortOrder == 'asc' %}selected{% endif %}>Ascendant</option>
+        <option value="desc" {% if sortOrder == 'desc' %}selected{% endif %}>Descendant</option>
+    </select>
+
+    <button type="submit" class="btn btn-outline-primary btn-sm ms-2">Appliquer</button>
+</form>
+
     <!-- End Navbar -->
     <!-- formations_modules.html.twig -->
 <div class="container-fluid py-2">
