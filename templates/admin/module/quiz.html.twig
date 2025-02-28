@@ -1,3 +1,6 @@
+{% extends 'main/barre.html.twig' %}
+
+{% block body %}
 <style>
     /* Animation d'apparition des questions */
     .card {
@@ -73,3 +76,4 @@
         <p class="text-danger text-center fw-bold mt-4">⚠️ Aucune question trouvée pour cette catégorie.</p>
     {% endif %}
 </div>
+{% endblock %}
