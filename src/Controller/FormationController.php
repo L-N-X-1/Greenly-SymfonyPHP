@@ -31,40 +31,60 @@ final class FormationController extends AbstractController
     }
 
     #[Route('/formation/ajouter', name: 'ajouter_formation')]
-    public function ajouterFormation(Request $request): Response
-    {
-        
-        $formation = new Formation();
-        
-        
-        $form = $this->createForm(FormationType::class, $formation);
-    
-        
-        $form->handleRequest($request);
-    
-        
-        $formations = $this->entityManager->getRepository(Formation::class)->findAll();
-    
-        
-        $modules = $this->entityManager->getRepository(Module::class)->findAll();
-    
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $this->entityManager->persist($formation);
-            $this->entityManager->flush();
-    
-            
-            return $this->redirectToRoute('admin_formations_modules');
+public function ajouterFormation(Request $request, EntityManagerInterface $entityManager): Response
+{
+    $formation = new Formation();
+    $form = $this->createForm(FormationType::class, $formation);
+    $form->handleRequest($request);
+
+    // Récupérer tous les modules
+    $modules = $entityManager->getRepository(Module::class)->findAll();
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Récupérer le module sélectionné pour cette formation
+        $module = $formation->getModule();
+
+        // Si aucun module n'est sélectionné, afficher un message d'erreur
+        if (!$module) {
+            $this->addFlash('error', 'Veuillez sélectionner un module pour la formation.');
+            return $this->render('admin/formation/ajouter.html.twig', [
+                'form' => $form->createView(),
+                'modules' => $modules,
+            ]);
         }
-    
-        
-        return $this->render('admin/formation/ajouter.html.twig', [
-            'form' => $form->createView(),
-            'formations' => $formations, 
-            'modules' => $modules,      
-        ]);
+
+        // Calcul de la durée totale des formations déjà existantes dans ce module
+        $formations = $module->getFormations();
+        $dureeFormation = array_sum(array_map(fn($formation) => $formation->getDureeFormation(), $formations->toArray()));
+
+        // Vérifier si la durée totale dépasse la capacité du module
+        if ($dureeFormation + $formation->getDureeFormation() > $module->getNbHeures()) {
+            // Afficher une notification ou un message d'erreur
+            $this->addFlash('error', 'La durée totale des formations dépasse la durée maximale du module. Veuillez modifier la durée de la formation ou la déplacer vers un autre module.');
+
+            // Retourner à la même page sans enregistrer la formation
+            return $this->render('admin/formation/ajouter.html.twig', [
+                'form' => $form->createView(),
+                'modules' => $modules,
+            ]);
+        }
+
+        // Si tout est valide, enregistrer la formation
+        $entityManager->persist($formation);
+        $entityManager->flush();
+
+        // Rediriger vers une autre page (exemple: liste des formations)
+        return $this->redirectToRoute('admin_formations_modules');
     }
+
+    // Si le formulaire n'est pas soumis ou n'est pas valide, afficher la page de formulaire
+    return $this->render('admin/formation/ajouter.html.twig', [
+        'form' => $form->createView(),
+        'modules' => $modules,
+    ]);
+}
+
+
     #[Route('/formation/supprimer/{id}', name: 'supprimer_formation')]
     public function supprimerFormation(int $id): RedirectResponse
     {
