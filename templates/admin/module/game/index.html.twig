@@ -1,0 +1,344 @@
+{% block title %} ♲️ Jeu du Recyclage - Module {{ moduleId }} {% endblock %}
+
+<div class="container text-center mt-5">
+    <h1>♲️ Jeu du Recyclage - Module {{ moduleId }}</h1>
+    <p>Faites glisser chaque déchet dans la bonne poubelle !</p>
+
+     <p id="timer" class="mt-3 font-weight-bold">Temps restant : 60s</p>
+
+    <!-- Déchets -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6">
+            <div id="trash-items" class="border p-3 bg-light">
+                <h5>Déchets</h5>
+                <div id="items-container" class="d-flex flex-wrap justify-content-center gap-3">
+                    <!-- Les déchets seront ajoutés ici dynamiquement -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Poubelles (réparties de manière plus aléatoire et espacée) -->
+   
+    <!-- Poubelles (disposées aléatoirement) -->
+   <div class="position-relative" id="bins-container">
+        <div class="bin-container">
+            <img src="/images/poubelle_verre.png" class="bin" data-type="verre">
+            <p class="bin-label">Verre</p>
+        </div>
+        <div class="bin-container">
+            <img src="/images/poubelle_plastique.png" class="bin" data-type="plastique">
+            <p class="bin-label">Plastique</p>
+        </div>
+        <div class="bin-container">
+            <img src="/images/poubelle_papier.png" class="bin" data-type="papier">
+            <p class="bin-label">Papier</p>
+        </div>
+        <div class="bin-container">
+            <img src="/images/poubelle_métaux.png" class="bin" data-type="metaux">
+            <p class="bin-label">Métaux</p>
+        </div>
+        <div class="bin-container">
+            <img src="/images/poubelle_vêtement.png" class="bin" data-type="vetement">
+            <p class="bin-label">Vêtements</p>
+        </div>
+        <div class="bin-container">
+            <img src="/images/poubelle_meubles.png" class="bin" data-type="meubles">
+            <p class="bin-label">Meubles</p>
+        </div>
+        <div class="bin-container">
+            <img src="/images/poubelle_électronique.png" class="bin" data-type="electronique">
+            <p class="bin-label">Électronique</p>
+        </div>
+    </div>
+
+    <p class="mt-3">Score : <span id="score">0</span></p>
+    <p id="message" class="mt-3"></p>
+
+    <button id="restart" class="btn btn-secondary mt-3" style="display: none;">🔄 Rejouer</button>
+
+    <a href="{{ path('app_module_details', { id: moduleId }) }}" class="btn btn-primary mt-3">
+        💚 Retour au Module
+    </a>
+</div>
+
+<style>
+ body {
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+        font-family: 'Arial', sans-serif;
+    }
+
+    .game-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .game-instructions {
+        font-size: 1.2rem;
+        color: #34495e;
+    }
+
+    .timer-text {
+        font-size: 1.5rem;
+        color: #e74c3c;
+    }
+    .bin {
+        width: 100px;
+        height: 100px;
+        transition: transform 0.2s ease-in-out;
+    }
+    
+    .bin:hover {
+        transform: scale(1.1);
+    }
+    
+    .trash-item {
+        cursor: grab;
+        width: 80px;
+        height: 80px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        padding: 5px;
+        transition: transform 0.2s ease-in-out;
+    }
+    
+    .trash-item:hover {
+        transform: scale(1.1);
+    }
+    
+    #items-container {
+        min-height: 150px;
+    }
+    
+    .bin-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    #message {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: green;
+        display: none;
+    }
+
+    .shake {
+        animation: shake 0.5s;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+    }
+    
+#bins-container {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Ajuste selon tes besoins */
+}
+
+.bin-container {
+    position: absolute;
+    width: 120px;
+    border: 2px dashed red;
+}
+.message {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.restart-btn {
+    display: block;
+    margin: 20px auto 0; /* Ajoute un espace entre le message et le bouton */
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.restart-btn:hover {
+    background-color: #0056b3;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+/* Style du bouton de redémarrage */
+.restart-btn {
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    display: none;
+}
+
+.restart-btn:hover {
+    background-color: #218838;
+}
+
+/* Positionnement aléatoire */
+.bin-container:nth-child(1) { top: 10px; left: 5%; }
+.bin-container:nth-child(2) { top: 50px; left: 30%; }
+.bin-container:nth-child(3) { top: 150px; left: 70%; }
+.bin-container:nth-child(4) { top: 200px; left: 20%; }
+.bin-container:nth-child(5) { top: 250px; left: 80%; }
+.bin-container:nth-child(6) { top: 100px; left: 50%; }
+.bin-container:nth-child(7) { top: 300px; left: 60%; }
+
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const items = [
+            { name: "Bouteille en plastique", type: "plastique", img: "bouteille_plastique.png" },
+            { name: "Bouteille en verre", type: "verre", img: "bouteille_verre.png" },
+            { name: "Journal", type: "papier", img: "journal.png" },
+            { name: "Canette en aluminium", type: "metaux", img: "canette_aluminium.png" },
+            { name: "Sac en plastique", type: "plastique", img: "sac_plastique.png" },
+            { name: "Feuille A4", type: "papier", img: "feuille_A4.png" },
+            { name: "Ordinateur", type: "electronique", img: "ordinateur.png" },
+            { name: "Téléphone", type: "electronique", img: "téléphone.png" },
+            { name: "Chaussures", type: "vetement", img: "chaussures.png" },
+            { name: "Veste", type: "vetement", img: "veste.png" },
+            { name: "Table", type: "meubles", img: "table.png" },
+            { name: "Chaise", type: "meubles", img: "chaise.png" },
+            { name: "Casserole", type: "metaux", img: "casserole.png" },
+            { name: "Couverts", type: "metaux", img: "couverts.png" }
+        ];
+
+
+        let score = 0;
+        let errors = 0;
+        let timer = 60;
+        const itemsContainer = document.getElementById("items-container");
+        const message = document.getElementById("message");
+        const restartBtn = document.getElementById("restart");
+        const timerElement = document.getElementById("timer");
+        
+         let interval = setInterval(() => {
+            timer--;
+            timerElement.textContent = `Temps restant : ${timer}s`;
+            if (timer <= 0) {
+                clearInterval(interval);
+                endGame();
+            }
+        }, 1000);
+
+        items.forEach((item, index) => {
+            let img = document.createElement("img");
+            img.src = "/images/" + item.img;
+            img.classList.add("trash-item");
+            img.draggable = true;
+            img.dataset.type = item.type;
+            img.id = "item-" + index;
+            img.addEventListener("dragstart", (e) => {
+                e.dataTransfer.setData("type", e.target.dataset.type);
+                e.dataTransfer.setData("id", e.target.id);
+            });
+            itemsContainer.appendChild(img);
+        });
+
+        document.querySelectorAll(".bin").forEach(bin => {
+            bin.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                bin.style.opacity = "0.7";
+            });
+
+            bin.addEventListener("dragleave", () => {
+                bin.style.opacity = "1";
+            });
+
+            bin.addEventListener("drop", (e) => {
+                e.preventDefault();
+                bin.style.opacity = "1";
+                const draggedType = e.dataTransfer.getData("type");
+                const draggedId = e.dataTransfer.getData("id");
+                const draggedElement = document.getElementById(draggedId);
+
+                if (draggedType === bin.dataset.type) {
+                    score++;
+                    document.getElementById("score").textContent = score;
+                    draggedElement.classList.add("shake");
+                    setTimeout(() => draggedElement.remove(), 500);
+                } else {
+                    errors++;
+                    draggedElement.classList.add("shake");
+                    setTimeout(() => draggedElement.classList.remove("shake"), 500);
+                    if (errors >= 3) {
+                        endGame();
+                    }
+                }
+            });
+        });
+        function endGame() {
+    clearInterval(interval);
+
+    const remainingItems = document.querySelectorAll(".trash-item").length;
+
+    if (remainingItems === 0) {
+        // Le joueur a terminé avant la fin du temps
+        message.textContent = `🎉 Félicitations ! Vous avez trié tous les déchets. Score final : ${score}`;
+        message.style.color = "green";
+    } 
+    else if (timer <= 0) {
+        // Le temps est écoulé et il reste encore des déchets
+        message.textContent = `⏳ Temps écoulé ! Vous n'avez pas trié tous les déchets. Score final : ${score}`;
+        message.style.color = "red";
+    } 
+    else {
+        // Le joueur a perdu car il n'a pas atteint le score requis
+        message.textContent = `❌ Vous avez perdu ! Score final : ${score}`;
+        message.style.color = "red";
+    }
+
+    // Ajouter les classes pour appliquer le style et l'animation
+    message.classList.add("message");
+    restartBtn.classList.add("restart-btn");
+
+    // Afficher le message et le bouton avec animation
+    message.style.display = "block";
+    restartBtn.style.display = "block";
+}
+
+
+// Redémarrer le jeu en rechargeant la page
+restartBtn.addEventListener("click", () => {
+    location.reload();
+});
+});
+</script>
+ 

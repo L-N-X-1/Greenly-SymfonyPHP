@@ -109,5 +109,11 @@ final class FormationController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    #[Route('/formation/ressources', name: 'formation_ressources')]
+public function ressources(): Response
+{
+    return $this->render('admin/formation/ressources.html.twig');
+}
+
 }
 

@@ -5,7 +5,6 @@
     <h2 class="text-center text-success">{{ module.nomModule }}</h2>
     <p class="text-center text-muted">{{ module.descriptionModule }}</p>
 
-    <!-- Informations Générales du Module -->
     <div class="row my-4">
         <div class="col-md-6">
             <div class="card shadow-lg border-0 p-3">
@@ -17,7 +16,6 @@
             </div>
         </div>
 
-        <!-- Section Statistiques avec Design Amélioré -->
         <div class="col-md-6">
             <div class="card shadow-lg border-0 p-3">
                 <h4 class="text-primary">📊 Statistiques du Module</h4>
@@ -27,37 +25,24 @@
                         <p><strong>Durée totale :</strong> {{ dureeFormation }} heures</p>
                         <p><strong>Durée de module :</strong> {{ module.getNbHeures }} heures</p>
                     </div>
-                    <!-- Icônes et Design Amélioré -->
                     <div>
                         <i class="fas fa-graduation-cap fa-3x text-success"></i>
                     </div>
                 </div>
 
-          <!-- Calcul de la barre de progression -->
-{% set pourcentageProgression = (dureeFormation / module.getNbHeures()) * 100 %}
-
-<!-- Barre de progression -->
-<div class="progress my-3" style="height: 10px;">
-<div class="progress-bar bg-primary" role="progressbar" style="width: {{ pourcentageProgression }}%" aria-valuenow="{{ totalFormations }}" aria-valuemin="0" aria-valuemax="{{ module.getNbHeures() }}">
-</div>      
-  {% set pourcentageProgression = (totalFormations / module.getNbHeures()) * 100 %}
-
-    </div>
-</div>
-
-
-
+                {% set pourcentageProgression = (dureeFormation / module.getNbHeures()) * 100 %}
+                <div class="progress my-3" style="height: 10px;">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{ pourcentageProgression }}%" aria-valuenow="{{ totalFormations }}" aria-valuemin="0" aria-valuemax="{{ module.getNbHeures() }}"></div>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="text-center my-4">
-    <a href="{{ path('app_quiz', { id: module.id }) }}" class="btn btn-lg btn-success">
-        🎯 Passer le Quiz
-    </a>
-</div>
+        <a href="{{ path('app_quiz', { id: module.id }) }}" class="btn btn-lg btn-success">🎯 Passer le Quiz</a>
+        <a href="{{ path('app_game', { id: module.id }) }}" class="btn btn-lg btn-warning">🎮 Jouer au Jeu</a>
+    </div>
 
-
-    <!-- Formations incluses dans le module -->
     <h3 class="text-center my-4">📚 Formations Incluses</h3>
     <div class="row g-4">
         {% for formation in formations %}
@@ -75,10 +60,8 @@
         {% endfor %}
     </div>
 
-    <!-- Section des Avis d'Entreprises -->
     <h3 class="text-center my-5">📝 Avis des Entreprises</h3>
     <div class="row g-4">
-        <!-- Avis 1 -->
         <div class="col-md-4">
             <div class="card shadow-lg border-0 p-3">
                 <div class="card-body">
@@ -88,7 +71,6 @@
                 </div>
             </div>
         </div>
-        <!-- Avis 2 -->
         <div class="col-md-4">
             <div class="card shadow-lg border-0 p-3">
                 <div class="card-body">
@@ -98,18 +80,15 @@
                 </div>
             </div>
         </div>
-        <!-- Avis 3 -->
         <div class="col-md-4">
             <div class="card shadow-lg border-0 p-3">
                 <div class="card-body">
                     <h5 class="card-title text-primary">Recytech Industries</h5>
-                    <p class="card-text">"Une formation de grande qualité, avec des formateurs expérimentés. Elle a parfaitement répondu à nos attentes et besoins." </p>
+                    <p class="card-text">"Une formation de grande qualité, avec des formateurs expérimentés. Elle a parfaitement répondu à nos attentes et besoins."</p>
                     <small class="text-muted">Publié le: 01/02/2025</small>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-
 {% endblock %}

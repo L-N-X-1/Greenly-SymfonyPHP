@@ -232,4 +232,27 @@ public function quizResult(Request $request, string $categorie): Response
         'total' => $total
     ]);
 }
+#[Route('/game/{id}', name: 'app_game')]
+public function game(int $id): Response
+{
+    // Logique pour charger le jeu avec l'ID du module
+    return $this->render('admin/module/game/index.html.twig', [
+        'moduleId' => $id
+    ]);
+}
+#[Route('/module/{id}', name: 'app_module_details')]
+public function details(int $id, ModuleRepository $moduleRepository): Response
+{
+    $module = $moduleRepository->find($id);
+
+    if (!$module) {
+        throw $this->createNotFoundException('Module introuvable.');
+    }
+
+    return $this->render('admin/module/details.html.twig', [
+        'module' => $module,
+    ]);
+}
+
+
 }
