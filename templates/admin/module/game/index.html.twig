@@ -1,4 +1,6 @@
+{% extends 'main/barre.html.twig' %}
 
+{% block body %}
 {% block title %} ♲️ Jeu du Recyclage - Module {{ moduleId }} {% endblock %}
 
 <div class="container text-center mt-5">
@@ -58,7 +60,7 @@
 
     <button id="restart" class="btn btn-secondary mt-3" style="display: none;">🔄 Rejouer</button>
 
-    <a href="{{ path('app_module_details', { id: moduleId }) }}" class="btn btn-primary mt-3">
+    <a href="{{ path('module_details', { id: moduleId }) }}" class="btn btn-primary mt-3">
         💚 Retour au Module
     </a>
 </div>
@@ -112,11 +114,15 @@
         min-height: 150px;
     }
     
-    .bin-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+  .bin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px; /* Largeur fixe pour chaque poubelle */
+    height: 150px; /* Hauteur fixe pour chaque poubelle */
+    text-align: center;
+}
     
     #message {
         font-size: 1.5rem;
@@ -189,6 +195,7 @@
         transform: translate(-50%, -50%);
     }
 }
+
 /* Style du bouton de redémarrage */
 .restart-btn {
     position: fixed;
@@ -342,5 +349,5 @@ restartBtn.addEventListener("click", () => {
 });
 });
 </script>
-
+{% endblock %}
  
