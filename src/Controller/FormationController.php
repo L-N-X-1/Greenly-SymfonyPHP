@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Formation;
 use App\Entity\Module;
 use App\Form\FormationType;
+use App\Repository\FormationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -207,5 +209,18 @@ public function details(EntityManagerInterface $entityManager, int $id): Respons
         'longitude' => $longitude,
     ]);
 }
+#[Route('/api/formations/search', name: 'search_formations')]
+public function searchFormations(Request $request, FormationRepository $formationRepository): JsonResponse
+{
+    $query = $request->query->get('q', '');
+    $formations = $formationRepository->createQueryBuilder('f')
+        ->where('f.nomFormation LIKE :query')
+        ->setParameter('query', "%$query%")
+        ->getQuery()
+        ->getResult();
+
+    return $this->json($formations);
+}
+
 }
 

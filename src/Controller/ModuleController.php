@@ -336,7 +336,18 @@ public function game(int $id): Response
             return new Response('Erreur lors de l’extraction du texte : ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-}
+    #[Route('/api/modules/search', name: 'search_modules')]
+    public function searchModules(Request $request, ModuleRepository $moduleRepository): JsonResponse
+    {
+        $query = $request->query->get('q', '');
+        $modules = $moduleRepository->createQueryBuilder('m')
+            ->where('m.nomModule LIKE :query')
+            ->setParameter('query', "%$query%")
+            ->getQuery()
+            ->getResult();
+    
+        return $this->json($modules);
+    }
     
 
-
+}
