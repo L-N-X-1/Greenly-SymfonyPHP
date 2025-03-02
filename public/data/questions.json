@@ -122,12 +122,12 @@
         {
             "question": "Combien de litres d’eau sont nécessaires pour produire 1 kg de papier ?",
             "options": ["5 litres", "50 litres", "500 litres", "5000 litres"],
-            "reponse": 4
+            "reponse": 3
         },
         {
             "question": "Que peut-on faire pour réduire la consommation de papier ?",
             "options": ["Imprimer en recto-verso", "Utiliser du papier recyclé", "Privilégier le numérique", "Toutes ces réponses"],
-            "reponse": 4
+            "reponse": 3
         },
         {
             "question": "Comment le papier est-il recyclé ?",
@@ -137,7 +137,7 @@
         {
             "question": "Quel est l’avantage du recyclage du papier ?",
             "options": ["Réduction de la pollution", "Économie d’eau et d’énergie", "Moins de déforestation", "Toutes ces réponses"],
-            "reponse": 4
+            "reponse": 3
         }
     ],
         "métaux": [

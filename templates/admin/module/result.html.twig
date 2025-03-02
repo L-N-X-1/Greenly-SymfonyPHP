@@ -51,6 +51,11 @@
             <p>📚 Il faut réviser un peu...</p>
         {% endif %}
     </div>
+    <a href="{{ path('quiz_result_pdf', { 'categorie': categorie }) }}" class="btn btn-primary">
+    📄 Télécharger en PDF
+</a>
+
+
 
     <a href="{{ path('quiz_module', { categorie: categorie }) }}" class="btn btn-primary mt-3 btn-animated">
         🔄 Refaire le Quiz

@@ -89,42 +89,6 @@ class MainController extends AbstractController
 
    
 
-    #[Route('/formations/{id}', name: 'formation_details')]
-    public function details(EntityManagerInterface $entityManager, int $id): Response
-    {
-        $formation = $entityManager->getRepository(Formation::class)->find($id);
-
-        if (!$formation) {
-            throw $this->createNotFoundException('Formation non trouvée');
-        }
-
-        return $this->render('main/formation_details.html.twig', [
-            'formation' => $formation
-        ]);
-    }
-    #[Route('/module/{id<\d+>}', name: 'module_details')]
-    public function moduleDetails(int $id, EntityManagerInterface $entityManager): Response
-    {
-        $module = $entityManager->getRepository(Module::class)->find($id);
-    
-        if (!$module) {
-            throw $this->createNotFoundException('Module non trouvé');
-        }
-    
-        // Récupérer les formations associées au module
-        $formations = $module->getFormations();
-    
-        // Calcul de la durée totale des formations
-        $dureeFormation = array_sum(array_map(fn($formation) => $formation->getDureeFormation(), $formations->toArray()));
-    
-        $totalFormations = count($formations);
-    
-        return $this->render('main/module_details.html.twig', [
-            'module' => $module,
-            'formations' => $formations,
-            'dureeFormation' => $dureeFormation,
-            'totalFormations' => $totalFormations,
-        ]);
-    }
+  
     
 }

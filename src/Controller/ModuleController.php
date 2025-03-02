@@ -14,6 +14,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route; 
+use Smalot\PdfParser\Parser;
+use Knp\Snappy\Pdf;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 final class ModuleController extends AbstractController
 {
@@ -232,6 +236,54 @@ public function quizResult(Request $request, string $categorie): Response
         'total' => $total
     ]);
 }
+
+
+#[Route('/quiz/result/{categorie}/pdf', name: 'quiz_result_pdf')]
+public function quizResultPdf(Request $request, string $categorie): Response
+{
+    $questions = $this->loadQuestions();
+    $categorie = strtolower(trim($categorie));
+
+    if (!isset($questions[$categorie])) {
+        throw $this->createNotFoundException("Aucune question trouvée pour cette catégorie.");
+    }
+
+    $questionsDisponibles = $questions[$categorie];
+    $reponsesUtilisateur = $request->query->all();
+    $score = 0;
+    $total = count($questionsDisponibles);
+
+    foreach ($questionsDisponibles as $index => $question) {
+        if (isset($reponsesUtilisateur["q$index"]) && intval($reponsesUtilisateur["q$index"]) === $question['reponse']) {
+            $score++;
+        }
+    }
+
+    // Générer la vue HTML
+    $html = $this->renderView('admin/module/result_pdf.html.twig', [
+        'categorie' => ucfirst($categorie),
+        'questions' => $questionsDisponibles,
+        'reponsesUtilisateur' => $reponsesUtilisateur,
+        'score' => $score,
+        'total' => $total
+    ]);
+
+    // Configuration de DomPDF
+    $options = new Options();
+    $options->set('defaultFont', 'Arial');
+    $dompdf = new Dompdf($options);
+    
+    // Charger le HTML dans DomPDF
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+
+    // Retourner le PDF en réponse HTTP
+    return new Response($dompdf->output(), 200, [
+        'Content-Type' => 'application/pdf',
+        'Content-Disposition' => 'inline; filename="resultat_quiz.pdf"'
+    ]);
+}
 #[Route('/game/{id}', name: 'app_game')]
 public function game(int $id): Response
 {
@@ -240,19 +292,51 @@ public function game(int $id): Response
         'moduleId' => $id
     ]);
 }
-#[Route('/module/{id}', name: 'app_module_details')]
-public function details(int $id, ModuleRepository $moduleRepository): Response
-{
-    $module = $moduleRepository->find($id);
 
-    if (!$module) {
-        throw $this->createNotFoundException('Module introuvable.');
+#[Route('/module/{id<\d+>}', name: 'module_details')]
+    public function moduleDetails(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $module = $entityManager->getRepository(Module::class)->find($id);
+    
+        if (!$module) {
+            throw $this->createNotFoundException('Module non trouvé');
+        }
+    
+        // Récupérer les formations associées au module
+        $formations = $module->getFormations();
+    
+        // Calcul de la durée totale des formations
+        $dureeFormation = array_sum(array_map(fn($formation) => $formation->getDureeFormation(), $formations->toArray()));
+    
+        $totalFormations = count($formations);
+    
+        return $this->render('main/module_details.html.twig', [
+            'module' => $module,
+            'formations' => $formations,
+            'dureeFormation' => $dureeFormation,
+            'totalFormations' => $totalFormations,
+        ]);
     }
+    #[Route('/extract-pdf', name: 'extract_pdf', methods: ['POST'])]
+    public function extractPdfText(Request $request): Response
+    {
+        $file = $request->files->get('pdf_file');
 
-    return $this->render('admin/module/details.html.twig', [
-        'module' => $module,
-    ]);
+        if (!$file) {
+            return new Response('Aucun fichier fourni.', Response::HTTP_BAD_REQUEST);
+        }
+
+        try {
+            $parser = new Parser();
+            $pdf = $parser->parseFile($file->getPathname());
+            $text = $pdf->getText();
+
+            return new Response(nl2br(htmlspecialchars($text)));
+        } catch (\Exception $e) {
+            return new Response('Erreur lors de l’extraction du texte : ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
+    
 
 
-}

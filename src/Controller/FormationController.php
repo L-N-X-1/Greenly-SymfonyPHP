@@ -134,6 +134,18 @@ public function ressources(): Response
 {
     return $this->render('admin/formation/ressources.html.twig');
 }
+#[Route('/formations/{id}', name: 'formation_details')]
+    public function details(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $formation = $entityManager->getRepository(Formation::class)->find($id);
 
+        if (!$formation) {
+            throw $this->createNotFoundException('Formation non trouvée');
+        }
+
+        return $this->render('main/formation_details.html.twig', [
+            'formation' => $formation
+        ]);
+    }
 }
 
