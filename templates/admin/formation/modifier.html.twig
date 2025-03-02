@@ -5,10 +5,9 @@
 <div class="container forum-container mt-5">
   <h2>Modifier la Formation</h2>
   
-  {# Modifier l'action pour pointer vers la route de modification et afficher le bon bouton #}
-  {{ form_start(form, {'method': 'post', 'action': path('modifier_formation', {'id': form.vars.value.id}) , 'attr': {'novalidate': 'novalidate'}}) }}
+  {{ form_start(form, {'method': 'post', 'action': path('modifier_formation', {'id': form.vars.value.id}), 'attr': {'novalidate': 'novalidate'}}) }}
 
-  <div class="mb-3 mt-4"> <!-- Ajout de mt-4 pour espacer le titre du premier champ -->
+  <div class="mb-3 mt-4">
     {{ form_label(form.nom_formation, "Nom de la Formation", {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.nom_formation, {'attr': {'class': 'form-control'}}) }}
     <div class="error-message">{{ form_errors(form.nom_formation) }}</div>
@@ -28,7 +27,7 @@
 
   <div class="mb-3">
     {{ form_label(form.mode_formation, "Mode de Formation", {'label_attr': {'class': 'form-label'}}) }}
-    {{ form_widget(form.mode_formation, {'attr': {'class': 'form-control'}}) }}
+    {{ form_widget(form.mode_formation, {'attr': {'class': 'form-control', 'onchange': 'toggleMap()'}}) }}
     <div class="error-message">{{ form_errors(form.mode_formation) }}</div>
   </div>
 
@@ -50,11 +49,75 @@
     <div class="error-message">{{ form_errors(form.module) }}</div>
   </div>
 
-  <button type="submit" class="btn btn-success">
+  <!-- Section de la carte pour modifier l'emplacement -->
+  <div class="mb-3" id="map-section">
+    <label class="form-label">Emplacement de la formation</label>
+    <div id="map" style="height: 400px; border-radius: 10px;"></div>
+    <input type="hidden" id="latitude" name="latitude" value="{{ latitude }}">
+    <input type="hidden" id="longitude" name="longitude" value="{{ longitude }}">
+    <div class="error-message text-danger" id="map-error" style="display: none;">L'emplacement est obligatoire pour une formation présentielle ou hybride.</div>
+  </div>
+
+  <button type="submit" class="btn btn-success" onclick="return validateForm()">
     {% if form.vars.value.id is defined %}Sauvegarder les modifications{% else %}Ajouter{% endif %}
   </button>
 
   {{ form_end(form) }}
 </div>
+
+<!-- Ajout du script pour Leaflet et la validation -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      var lat = parseFloat(document.getElementById("latitude").value) || 35.505;
+      var lng = parseFloat(document.getElementById("longitude").value) || 9.734;
+
+      var map = L.map('map').setView([lat, lng], 10);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+      }).addTo(map);
+
+      var marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+
+      marker.on('dragend', function (e) {
+          var position = marker.getLatLng();
+          document.getElementById("latitude").value = position.lat;
+          document.getElementById("longitude").value = position.lng;
+      });
+
+      toggleMap(); // Vérifier l'état initial au chargement
+  });
+
+  function toggleMap() {
+      var modeFormation = document.querySelector("[name='mode_formation']").value;
+      var mapSection = document.getElementById("map-section");
+      var latitude = document.getElementById("latitude");
+      var longitude = document.getElementById("longitude");
+
+      if (modeFormation === "Distanciel") {
+          mapSection.style.display = "none";
+          latitude.value = "";
+          longitude.value = "";
+      } else {
+          mapSection.style.display = "block";
+      }
+  }
+
+  function validateForm() {
+      var modeFormation = document.querySelector("[name='mode_formation']").value;
+      var latitude = document.getElementById("latitude").value;
+      var longitude = document.getElementById("longitude").value;
+      var mapError = document.getElementById("map-error");
+
+      if ((modeFormation === "Présentiel" || modeFormation === "Hybride") && (!latitude || !longitude)) {
+          mapError.style.display = "block";
+          return false; // Bloquer la soumission du formulaire
+      } else {
+          mapError.style.display = "none";
+          return true; // Autoriser la soumission
+      }
+  }
+</script>
 
 {% endblock %}

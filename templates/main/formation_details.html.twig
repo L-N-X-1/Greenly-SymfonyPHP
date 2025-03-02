@@ -41,6 +41,12 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Emplacement de la formation -->
+<div class="mb-4">
+    <h5 class="mt-4 text-primary font-weight-bold">Emplacement de la formation</h5>
+    <div id="map" style="height: 400px; border-radius: 10px;"></div>
+</div>
+
 
                     <!-- Dates de la formation -->
                     <div class="row mb-4">
@@ -118,4 +124,27 @@
         </div>
     </div>
 </div>
+<!-- Inclure la bibliothèque Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var latitude = {{ latitude|default(35.505) }};
+        var longitude = {{ longitude|default(9.734) }};
+
+        var map = L.map('map').setView([latitude, longitude], 13);
+
+        // Ajouter une couche de tuiles (fond de carte)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Ajouter un marqueur sur l'emplacement de la formation
+        L.marker([latitude, longitude]).addTo(map)
+            .bindPopup("Emplacement de la formation")
+            .openPopup();
+    });
+</script>
+
 {% endblock %}

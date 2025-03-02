@@ -63,11 +63,57 @@
             <div class="error-message">{{ form_errors(form.module) }}</div>
         </div>
 
-        <button type="submit" class="btn btn-success">Ajouter</button>
+
+    <!-- Section Carte OpenStreetMap -->
+<div class="mb-4">
+    <h5 class="mt-4 text-primary font-weight-bold">Localisation de l'Espace de Formation</h5>
+    <p>Cliquez sur la carte pour sélectionner un emplacement.</p>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+</div>
+
+<!-- Champs cachés pour stocker latitude et longitude -->
+<input type="hidden" id="latitude" name="latitude">
+<input type="hidden" id="longitude" name="longitude">
+
+<!-- Intégration de Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <button type="submit" class="btn btn-success">Ajouter</button>
         <button type="button" class="btn btn-danger mt-3" id="notificationButton">Afficher Notification</button>
 
-        {{ form_end(form) }}
+        
+{{ form_end(form) }}
     </div>
+
+<script>
+    var map = L.map('map').setView([36.8065, 10.1815], 8); // Vue par défaut (Tunis)
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker;
+
+    // Ajouter un marqueur lors du clic sur la carte
+    map.on('click', function(e) {
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng;
+
+        // Mettre à jour les champs cachés
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+
+        // Supprimer l'ancien marqueur s'il existe
+        if (marker) {
+            map.removeLayer(marker);
+        }
+
+        // Ajouter un nouveau marqueur
+        marker = L.marker([lat, lng]).addTo(map)
+            .bindPopup("Espace de Formation sélectionné").openPopup();
+    });
+</script>
+
 {% endblock %}
 
 {% block stylesheets %}
@@ -134,16 +180,50 @@
 
 {% block javascripts %}
     <script>
-        document.getElementById('notificationButton').addEventListener('click', function() {
-            // Ajouter une notification de succès ou d'erreur en fonction de l'état
-            var messageType = 'error'; // Changez ceci pour 'success' selon votre logique
+        document.addEventListener("DOMContentLoaded", function () {
+        const modeFormation = document.querySelector("[name='mode_formation']");
+        const mapContainer = document.getElementById("map-container");
 
-            var alertBox = document.createElement('div');
-            alertBox.className = 'alert alert-' + messageType + ' alert-dismissible fade show animated-notification';
-            alertBox.setAttribute('role', 'alert');
-            alertBox.innerHTML = '<strong>' + (messageType === 'error' ? 'Attention !' : 'Succès !') + '</strong> Ceci est une notification de type ' + messageType + '. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
-            
-            document.body.appendChild(alertBox);
+        function toggleMapVisibility() {
+            if (modeFormation.value === "Présentiel" || modeFormation.value === "Hybride") {
+                mapContainer.style.display = "block";
+                if (!window.mapInitialized) {
+                    initMap();
+                    window.mapInitialized = true;
+                }
+            } else {
+                mapContainer.style.display = "none";
+            }
+        }
+
+        modeFormation.addEventListener("change", toggleMapVisibility);
+        toggleMapVisibility(); // Vérifie au chargement de la page
+    });
+
+    function initMap() {
+        var map = L.map('map').setView([36.8065, 10.1815], 13);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var marker;
+
+        map.on('click', function(e) {
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            marker = L.marker([lat, lng]).addTo(map)
+                .bindPopup("Espace de Formation sélectionné").openPopup();
         });
-    </script>
+    }
+</script>
+
 {% endblock %}
