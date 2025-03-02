@@ -70,7 +70,7 @@ final class FormationController extends AbstractController
             $dureeFormation = array_sum(array_map(fn($formation) => $formation->getDureeFormation(), $formations->toArray()));
     
             if ($dureeFormation + $formation->getDureeFormation() > $module->getNbHeures()) {
-                $this->addFlash('error', 'La durée totale des formations dépasse la durée maximale du module.');
+               $this->addFlash('error', 'La durée totale des formations dépasse la durée maximale du module.');
     
                 return $this->render('admin/formation/ajouter.html.twig', [
                     'form' => $form->createView(),
