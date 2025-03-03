@@ -1,0 +1,43 @@
+{% extends 'main/barre.html.twig' %}
+
+{% block body %}
+    <div class="container text-center mt-4">
+        <h1 class="mb-3">📺 Vidéo pour le module : {{ module.nomModule }}</h1>
+
+        {% if videoUrl %}
+            <p class="lead text-muted">Découvrez une vidéo explicative sur le recyclage de la catégorie <strong>{{ module.categorie }}</strong>.</p>
+
+            <div class="d-flex justify-content-center">
+                <iframe width="700" height="400" src="{{ videoUrl }}" frameborder="0" allowfullscreen class="rounded shadow"></iframe>
+            </div>
+
+            <div class="mt-4">
+                <h3>📚 Description du module</h3>
+                <p>{{ module.descriptionModule | default('Aucune description disponible.') }}</p>
+
+                <h4>💡 Pourquoi recycler le {{ module.categorie }} ?</h4>
+                <p>
+                    {% if module.categorie == 'Plastique' %}
+                        Le plastique met des siècles à se décomposer et pollue les océans. Son recyclage permet de réduire cette pollution et de préserver l’environnement.
+                    {% elseif module.categorie == 'Verre' %}
+                        Le verre est 100% recyclable et peut être réutilisé à l’infini sans perdre ses qualités.
+                    {% elseif module.categorie == 'Electronique' %}
+                        Les déchets électroniques contiennent des matériaux précieux qui peuvent être réutilisés au lieu d’être jetés.
+                    {% elseif module.categorie == 'Papier' %}
+                        Recycler le papier permet d’économiser des arbres et de réduire la consommation d’eau et d’énergie.
+                    {% elseif module.categorie == 'Métaux' %}
+                        Les métaux recyclés permettent d’économiser des ressources naturelles et de réduire l’impact environnemental de leur extraction.
+                    {% elseif module.categorie == 'Vetements' %}
+                        Donner ou recycler ses vêtements permet de limiter le gaspillage et de leur donner une seconde vie.
+                    {% elseif module.categorie == 'Meubles' %}
+                        Recycler ou rénover ses meubles permet d’éviter le gaspillage et de réduire la production de nouveaux matériaux.
+                    {% else %}
+                        Recycler cette catégorie contribue à un monde plus propre et plus durable.
+                    {% endif %}
+                </p>
+            </div>
+        {% else %}
+            <p class="alert alert-warning">⚠️ Aucune vidéo disponible pour cette catégorie.</p>
+        {% endif %}
+    </div>
+{% endblock %}

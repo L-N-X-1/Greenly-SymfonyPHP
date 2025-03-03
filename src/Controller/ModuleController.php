@@ -348,6 +348,37 @@ public function game(int $id): Response
     
         return $this->json($modules);
     }
-    
+    #[Route('/module/{id}/video', name: 'module_video')]
+public function moduleVideo(int $id, EntityManagerInterface $entityManager): Response
+{
+    $module = $entityManager->getRepository(Module::class)->find($id);
+
+    if (!$module) {
+        throw $this->createNotFoundException('Module non trouvé');
+    }
+
+    // Liste des vidéos associées aux catégories
+    $videos = [
+        'plastique' => 'https://www.youtube.com/embed/IMGI0l66xxM',
+        'verre' => 'https://www.youtube.com/embed/h_unmxyJmY8',
+        'électronique' => 'https://www.youtube.com/embed/uKgNbwK15qk',
+        'papier' => 'https://www.youtube.com/embed/HWJWziz6-oo',
+        'métaux' => 'https://www.youtube.com/embed/143XL96maCo',
+        'vetements' => 'https://www.youtube.com/embed/1OBhP-RPA-g',
+        'meubles' => 'https://www.youtube.com/embed/C2BbCM04QiI',
+    ];
+
+    // Normaliser la catégorie
+    $categorie = strtolower(trim($module->getCategorie()));
+
+    // Vérifier si une vidéo correspond à la catégorie
+    $videoUrl = $videos[$categorie] ?? null;
+
+    return $this->render('admin/module/module_video.html.twig', [
+        'module' => $module,
+        'videoUrl' => $videoUrl,
+    ]);
+}
+
 
 }
