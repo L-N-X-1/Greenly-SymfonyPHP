@@ -1,0 +1,65 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Create New User{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h1 class="mb-4">Create New User</h1>
+
+    {{ include('includes/flashes.twig') }}
+
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="mb-0">User Form</h5>
+        </div>
+        <div class="card-body">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            
+            <div class="mb-3">
+                {{ form_label(form.email, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Enter email address'}}) }}
+                {{ form_errors(form.email) }}
+            </div>
+            
+            <div class="mb-3">
+                {{ form_label(form.fullName, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.fullName, {'attr': {'class': 'form-control', 'placeholder': 'Enter full name'}}) }}
+                {{ form_errors(form.fullName) }}
+            </div>
+            
+            <div class="mb-3">
+                {{ form_label(form.roles, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.roles, {'attr': {'class': 'form-select'}}) }}
+                {{ form_errors(form.roles) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.imgFile, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.imgFile, {'attr': {'class': 'form-control', 'accept': '.jpeg, .jpg, .png'}}) }}
+                {{ form_errors(form.imgFile) }}
+            </div>
+
+            <!-- Password Field -->
+            <div class="mb-3">
+                {{ form_label(form.password.first, 'Password', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.password.first, {'attr': {'class': 'form-control', 'placeholder': 'Enter password'}}) }}
+                {{ form_errors(form.password.first) }}
+            </div>
+
+            <!-- Repeat Password Field -->
+            <div class="mb-3">
+                {{ form_label(form.password.second, 'Repeat Password', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.password.second, {'attr': {'class': 'form-control', 'placeholder': 'Re-enter password'}}) }}
+                {{ form_errors(form.password.second) }}
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-primary">Create User</button>
+                <a href="{{ path('app_user_index') }}" class="btn btn-outline-secondary btn-sm">Back to list</a>
+            </div>
+            
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modifier produit{% endblock %}
+
+{% block body %}
+    <div class="container-fluid py-4 d-flex justify-content-center min-vh-100 align-items-center">
+        <div class="row w-100">
+            <div class="col-12">
+                <div class="card my-4">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+                            <h6 class="text-white text-capitalize ps-3">Modifier le produit</h6>
+                        </div>
+                    </div>
+                    <div class="card-body px-4 pb-2">
+                        <div class="container">
+                            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th><label for="nom" class="form-label">Nom</label></th>
+                                        <td>{{ form_widget(form.nom, {'attr': {'class': 'form-control', 'id': 'nom'}}) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label for="prix" class="form-label">Prix</label></th>
+                                        <td>{{ form_widget(form.prix, {'attr': {'class': 'form-control', 'id': 'prix'}}) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label for="description" class="form-label">Description</label></th>
+                                        <td>{{ form_widget(form.description, {'attr': {'class': 'form-control', 'id': 'description'}}) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label for="categorie" class="form-label">Catégorie</label></th>
+                                        <td>{{ form_widget(form.categorie, {'attr': {'class': 'form-control', 'id': 'categorie'}}) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-success me-2">Enregistrer</button>
+                                <a href="{{ path('produit_index') }}" class="btn btn-secondary">Retour à la liste</a>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

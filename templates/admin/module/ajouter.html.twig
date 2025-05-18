@@ -1,0 +1,63 @@
+
+{% extends 'admin/pages/barreforum.html.twig' %}
+
+{% block body %}
+
+
+<div class="container forum-container mt-5">
+  <h2>Forum des Modules</h2>
+  
+  {{ form_start(form, {'method': 'post', 'action': path('ajouter_module'), 'attr': {'novalidate': 'novalidate'}}) }}
+
+  
+   <div class="mb-3">
+  {{ form_label(form.nom_module, "Nom du Module", {'label_attr': {'class': 'form-label'}}) }}
+  {{ form_widget(form.nom_module, {'attr': {'class': 'form-control'}}) }}
+  <div class="error-message">{{ form_errors(form.nom_module) }}</div>
+</div>
+
+<div class="mb-3">
+  {{ form_label(form.description_module, "Description", {'label_attr': {'class': 'form-label'}}) }}
+  {{ form_widget(form.description_module, {'attr': {'class': 'form-control'}}) }}
+  <div class="error-message">{{ form_errors(form.description_module) }}</div>
+</div>
+
+<div class="mb-3">
+  {{ form_label(form.nb_heures, "Nombre d'Heures", {'label_attr': {'class': 'form-label'}}) }}
+  {{ form_widget(form.nb_heures, {'attr': {'class': 'form-control'}}) }}
+  <div class="error-message">{{ form_errors(form.nb_heures) }}</div>
+</div>
+
+<div class="mb-3">
+  {{ form_label(form.niveau, "Niveau", {'label_attr': {'class': 'form-label'}}) }}
+  {{ form_widget(form.niveau, {'attr': {'class': 'form-control'}}) }}
+  <div class="error-message">{{ form_errors(form.niveau) }}</div>
+</div>
+
+<div class="mb-3">
+  {{ form_label(form.categorie, "Catégorie", {'label_attr': {'class': 'form-label'}}) }}
+  {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
+  <div class="error-message">{{ form_errors(form.categorie) }}</div>
+</div>
+
+<div class="mb-3">
+  {{ form_label(form.statut, "Statut", {'label_attr': {'class': 'form-label'}}) }}
+  {{ form_widget(form.statut, {'attr': {'class': 'form-check-input'}}) }}
+  <div class="error-message">{{ form_errors(form.statut) }}</div>
+</div>
+
+
+<div class="mb-3">
+    {{ form_label(form.datecreation_module, "Date de Création", {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.datecreation_module, {'attr': {'class': 'form-control', 'type': 'date'}}) }}
+    <div class="error-message">{{ form_errors(form.datecreation_module) }}</div>
+  </div>
+
+<button type="submit" class="btn btn-success">Ajouter</button>
+
+{{ form_end(form) }}
+</div>
+
+</body>
+</html>
+{% endblock %}
