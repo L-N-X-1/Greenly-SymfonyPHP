@@ -1,0 +1,103 @@
+{% extends 'main/barre.html.twig' %}
+
+{% block body %}
+<style>
+  .card-img-top {
+      height: 200px; /* Uniformiser la hauteur des images */
+      object-fit: cover; /* Recadrer l'image sans déformation */
+  }
+  .card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+  }
+  .card-body {
+      flex-grow: 1;
+  }
+</style>
+
+<div class="container mt-5">
+  <h2 class="text-center my-4">📚 Nos Modules de Formation</h2>
+  
+  <div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+    <input type="text" id="searchInput" class="form-control" placeholder="Rechercher un module...">
+  </div>
+   </div>
+
+  <p>Nombre de modules disponibles : <span id="moduleCount">{{ modules|length }}</span></p>
+
+  <div class="row justify-content-center" id="moduleContainer">
+    {% for module in modules %}
+      <div class="col-md-4 mb-4 module-card">
+        <div class="card shadow-lg border-0">
+          <div class="card-body">
+            <h4 class="card-title text-success">{{ module.nomModule }}</h4>
+            <p class="card-text">{{ module.descriptionModule|slice(0, 100) }}...</p>
+            <p><strong>📅 Durée :</strong> {{ module.NbHeures }} heures</p>
+            <p><strong>📌 Formations incluses :</strong> {{ module.formations|length }}</p>
+            <a href="{{ path('module_details', { id: module.id }) }}" class="btn btn-outline-success">Voir plus</a>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <p class="text-center">Aucun module disponible.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+document.getElementById('searchInput').addEventListener('input', function() {
+    let query = this.value.toLowerCase();
+    let cards = document.querySelectorAll('.module-card');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+        let title = card.querySelector('.card-title').textContent.toLowerCase();
+        if (title.includes(query)) {
+            card.style.display = 'block';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    document.getElementById('moduleCount').textContent = visibleCount;
+});
+</script>
+
+<script>
+document.getElementById('searchInput').addEventListener('input', function() {
+    let query = this.value.trim();
+
+    fetch(`/api/modules/search?q=${query}`)
+        .then(response => response.json())
+        .then(modules => {
+            let container = document.getElementById('moduleContainer');
+            container.innerHTML = ''; // Effacer les anciens modules
+
+            modules.forEach(module => {
+                let card = `
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-lg border-0">
+                            <div class="card-body">
+                                <h4 class="card-title text-success">${module.nomModule}</h4>
+                                <p class="card-text">${module.descriptionModule.slice(0, 100)}...</p>
+                                <p><strong>📅 Durée :</strong> ${module.NbHeures} heures</p>
+                                <p><strong>📌 Formations incluses :</strong> ${module.formations.length}</p>
+                                <a href="/module/${module.id}" class="btn btn-outline-success">Voir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+
+            document.getElementById('moduleCount').textContent = modules.length;
+        });
+});
+</script>
+
+<script src="{{ asset('js/search1.js') }}"></script>
+{% endblock %}

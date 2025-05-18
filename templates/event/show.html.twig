@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/event-detail.css') }}">
+{% endblock %}
+
+{% block title %}{{ event.eventName }}{% endblock %}
+
+{% block body %}
+    <div class="event-detail-container">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+        
+        <div class="event-header">
+            <h1>{{ event.eventName }}</h1>
+            <div class="event-status">
+                <span class="badge bg-{{ event.eventStatus == 'Upcoming' ? 'success' : (event.eventStatus == 'Cancelled' ? 'danger' : 'warning') }}">
+                    {{ event.eventStatus }}
+                </span>
+            </div>
+        </div>
+
+        <div class="event-info">
+            <div class="info-row">
+                <div class="info-label">
+                    <i class="fas fa-calendar-alt"></i> Date
+                </div>
+                <div class="info-value">
+                    {{ event.eventDate ? event.eventDate|date('d F Y à H:i') : 'Date not set' }}
+                </div>
+            </div>
+            
+            <div class="info-row">
+                <div class="info-label">
+                    <i class="fas fa-map-marker-alt"></i> Location
+                </div>
+                <div class="info-value">
+                    {{ event.eventLocation }}
+                </div>
+            </div>
+
+            {% if event.sponsors|length > 0 %}
+            <div class="info-row">
+                <div class="info-label">
+                    <i class="fas fa-handshake"></i> Sponsors
+                </div>
+                <div class="info-value">
+                    {% for sponsor in event.sponsors %}
+                        {{ sponsor.sponsorName }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>        <div class="event-description">
+            <h3><i class="fas fa-info-circle"></i> Description</h3>
+            <p>{{ event.eventDescription }}</p>
+        </div>        <div class="event-actions">
+            <a href="{{ path('app_event_index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Events
+            </a>
+        </div>
+    </div>
+{% endblock %}

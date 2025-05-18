@@ -1,0 +1,243 @@
+{% extends 'admin/pages/barreforum.html.twig' %}
+
+{% block body %}
+    <div class="container forum-container mt-5">
+        <h2>Forum des Formations</h2>
+
+        {# Affichage de la notification avec changement de couleur selon le type de message #}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger alert-dismissible fade show animated-notification" role="alert">
+                <strong>Attention !</strong> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible fade show animated-notification" role="alert">
+                <strong>Succès !</strong> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+
+        {{ form_start(form, {'method': 'post', 'action': path('ajouter_formation'), 'attr': {'novalidate': 'novalidate'}}) }}
+
+        <div class="mb-3 mt-4">
+            {{ form_label(form.nom_formation, "Nom de la Formation", {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.nom_formation, {'attr': {'class': 'form-control'}}) }}
+            <div class="error-message">{{ form_errors(form.nom_formation) }}</div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.description_formation, "Description", {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.description_formation, {'attr': {'class': 'form-control'}}) }}
+            <div class="error-message">{{ form_errors(form.description_formation) }}</div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.duree_formation, "Durée", {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.duree_formation, {'attr': {'class': 'form-control'}}) }}
+            <div class="error-message">{{ form_errors(form.duree_formation) }}</div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.mode_formation, "Mode de Formation", {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.mode_formation, {'attr': {'class': 'form-control'}}) }}
+            <div class="error-message">{{ form_errors(form.mode_formation) }}</div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.datedebut_formation, "Date de Début", {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.datedebut_formation, {'attr': {'class': 'form-control'}}) }}
+            <div class="error-message">{{ form_errors(form.datedebut_formation) }}</div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.datefin_formation, "Date de Fin", {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.datefin_formation, {'attr': {'class': 'form-control'}}) }}
+            <div class="error-message">{{ form_errors(form.datefin_formation) }}</div>
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.module, "Module", {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.module, {'attr': {'class': 'form-control'}}) }}
+            <div class="error-message">{{ form_errors(form.module) }}</div>
+        </div>
+
+
+    <!-- Section Carte OpenStreetMap -->
+<div class="mb-4">
+    <h5 class="mt-4 text-primary font-weight-bold">Localisation de l'Espace de Formation</h5>
+    <p>Cliquez sur la carte pour sélectionner un emplacement.</p>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+</div>
+
+<!-- Champs cachés pour stocker latitude et longitude -->
+<input type="hidden" id="latitude" name="latitude">
+<input type="hidden" id="longitude" name="longitude">
+
+<!-- Intégration de Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <button type="submit" class="btn btn-success">Ajouter</button>
+        <button type="button" class="btn btn-danger mt-3" id="notificationButton">Afficher Notification</button>
+
+        
+{{ form_end(form) }}
+    </div>
+
+<script>
+    var map = L.map('map').setView([36.8065, 10.1815], 8); // Vue par défaut (Tunis)
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker;
+
+    // Ajouter un marqueur lors du clic sur la carte
+    map.on('click', function(e) {
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng;
+
+        // Mettre à jour les champs cachés
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+
+        // Supprimer l'ancien marqueur s'il existe
+        if (marker) {
+            map.removeLayer(marker);
+        }
+
+        // Ajouter un nouveau marqueur
+        marker = L.marker([lat, lng]).addTo(map)
+            .bindPopup("Espace de Formation sélectionné").openPopup();
+    });
+</script>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .alert {
+            padding: 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .btn-close {
+            background-color: transparent;
+            border: none;
+            font-size: 1.5rem;
+        }
+
+        .btn-close:hover {
+            color: #5a5a5a;
+        }
+
+        /* Animation pour la notification */
+        @keyframes slideIn {
+            0% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+        }
+
+        /* Animation pour la disparition de la notification */
+        .animated-notification {
+            animation: slideIn 0.5s forwards, fadeOut 3s 4.5s forwards;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.getElementById('notificationButton').addEventListener('click', function() {
+            // Ajouter une notification de succès ou d'erreur en fonction de l'état
+            var messageType = 'error'; // Changez ceci pour 'success' selon votre logique
+
+            var alertBox = document.createElement('div');
+            alertBox.className = 'alert alert-' + messageType + ' alert-dismissible fade show animated-notification';
+            alertBox.setAttribute('role', 'alert');
+            alertBox.innerHTML = '<strong>' + (messageType === 'error' ? 'Attention !' : 'Succès !') + '</strong> Ceci est une notification de type ' + messageType + '. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+            
+            document.body.appendChild(alertBox);
+        });
+    </script>
+   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modeFormation = document.querySelector("[name='mode_formation']");
+        const mapContainer = document.getElementById("map");
+
+        function toggleMapVisibility() {
+            if (modeFormation.value === "Présentiel" || modeFormation.value === "Hybride") {
+                mapContainer.style.display = "block";
+                initMap();
+            } else {
+                mapContainer.style.display = "none";
+            }
+        }
+
+        modeFormation.addEventListener("change", toggleMapVisibility);
+        toggleMapVisibility(); // Vérifie au chargement de la page
+    });
+
+    function initMap() {
+        var map = L.map('map').setView([36.8065, 10.1815], 13); // Coordonnées par défaut (Tunis)
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var marker;
+
+        // Ajouter un marqueur lors du clic sur la carte
+        map.on('click', function(e) {
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+
+            // Mettre à jour les champs cachés
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+
+            // Supprimer l'ancien marqueur s'il existe
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            // Ajouter un nouveau marqueur
+            marker = L.marker([lat, lng]).addTo(map)
+                .bindPopup("Espace de Formation sélectionné").openPopup();
+        });
+    }
+</script>
+
+{% endblock %}

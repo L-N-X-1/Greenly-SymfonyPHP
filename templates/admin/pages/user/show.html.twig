@@ -1,0 +1,77 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+<div class="container-fluid py-4">
+    {{ include('includes/flashes.twig') }}
+
+    <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">User Details</h5>
+            <a href="{{ path('app_user_index') }}" class="btn btn-outline-secondary btn-sm">Back to list</a>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-bordered table-striped table-hover">
+                <tbody>
+                    <tr>
+                        <th scope="row">Id</th>
+                        <td>{{ user.id }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Full Name</th>
+                        <td>{{ user.fullName }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Roles</th>
+                       <td>
+                          {% if 'ROLE_ADMIN' in user.roles %}
+                            <span class="badge badge-sm bg-gradient-success">Admin</span>
+                          {% elseif 'ROLE_ENTREPRISE' in user.roles %}
+                            <span class="badge badge-sm bg-gradient-secondary">Entreprise</span>
+                          {% elseif 'ROLE_ASSOCIATION' in user.roles %}
+                            <span class="badge badge-sm bg-gradient-danger">Association</span>
+                          {% elseif 'ROLE_FORMATEUR' in user.roles %}
+                            <span class="badge badge-sm bg-gradient-warning">Formateur</span>
+                          {% else %}
+                            <span class="badge badge-sm bg-gradient-primary">Utilisateur</span>
+                          {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Verification ID</th>
+                       <td>
+                    
+                          {% if 'ROLE_ENTREPRISE' in user.roles %}
+                            <span class="badge badge-sm bg-gradient-primary">{{ user.verifedEntreprise }}</span>
+                          {% elseif 'ROLE_ASSOCIATION' in user.roles %}
+                            <span class="badge badge-sm bg-gradient-primary">{{ user.verifedAssoc }}</span>
+                          {% elseif 'ROLE_FORMATEUR' in user.roles %}
+                            <span class="badge badge-sm bg-gradient-primary">{{ user.verifedForm }}</span>
+                          {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Profile Image</th>
+                        <td>
+                            {% if user.imgLink is not empty %}
+                                <img src="{{ vich_uploader_asset(user,'imgFile') }}" class="img-fluid rounded" alt="User Image" style="max-width: 150px;">
+                            {% else %}
+                                <span>No image available</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer d-flex justify-content-between">
+            <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-primary btn-sm">Edit</a>
+            <a href="{{ path('app_user_delete', {'id': user.id}) }}" class="btn btn-danger btn-sm">Delete</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Résultat du Quiz - {{ categorie }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        h1 { text-align: center; color: #4CAF50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 10px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        .correct { color: green; font-weight: bold; }
+        .incorrect { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>Résultat du Quiz - {{ categorie|capitalize }}</h1>
+
+    <table>
+        <tr>
+            <th>Question</th>
+            <th>Bonne Réponse</th>
+        </tr>
+        {% for index, question in questions %}
+            <tr>
+                <td>{{ question.question }}</td>
+                <td class="correct">
+                    ✅ {{ question.options[question.reponse] }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

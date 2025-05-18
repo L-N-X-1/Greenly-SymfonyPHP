@@ -1,0 +1,105 @@
+{% extends 'main/barre.html.twig' %}
+
+{% block body %}
+<style>
+  .card-img-top {
+      height: 200px; /* Uniformiser la hauteur des images */
+      object-fit: cover; /* Recadrer l'image sans déformation */
+  }
+  .card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+  }
+  .card-body {
+      flex-grow: 1;
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <input type="text" id="searchInput" class="form-control mb-4" placeholder="Rechercher une formation...">
+    </div>
+  </div>
+
+  <p>Nombre de formations disponibles : <span id="formationCount">{{ formations|length }}</span></p>
+
+  {% set images = ['formation1.jpg', 'formation2.jpg', 'formation3.jpg', 'formation4.jpg', 'formation5.jpg', 'formation6.jpg'] %}
+
+  <div class="row justify-content-center" id="formationContainer">
+    {% for formation in formations %}
+      <div class="col-md-4 mb-4 formation-card">
+        <div class="card shadow-sm border-0 rounded-lg overflow-hidden">
+          <img src="{{ asset('images/' ~ images[loop.index0 % images|length]) }}" 
+               class="card-img-top img-fluid rounded-0" 
+               alt="Formation Image">
+
+          <div class="card-body d-flex flex-column text-right" style="direction: rtl;">
+            <h5 class="card-title text-dark">{{ formation.nomFormation }}</h5>
+            <p class="card-text text-muted mb-4">{{ formation.descriptionFormation|slice(0, 100) }}...</p>
+            <p><strong class="text-dark">Durée :</strong> {{ formation.dureeFormation }} heures</p>
+            <div class="mt-auto">
+              <a href="{{ path('formation_details', {'id': formation.id}) }}" class="btn btn-success mt-3 px-4 py-2 rounded-pill w-100">Voir plus</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+document.getElementById('searchInput').addEventListener('input', function() {
+    let query = this.value.toLowerCase();
+    let cards = document.querySelectorAll('.formation-card');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+        let title = card.querySelector('.card-title').textContent.toLowerCase();
+        if (title.includes(query)) {
+            card.style.display = 'block';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    document.getElementById('formationCount').textContent = visibleCount;
+});
+</script>
+<script>
+document.getElementById('searchInput').addEventListener('input', function() {
+    let query = this.value.trim();
+
+    fetch(`/api/formations/search?q=${query}`)
+        .then(response => response.json())
+        .then(formations => {
+            let container = document.getElementById('formationContainer');
+            container.innerHTML = ''; // Effacer les anciennes formations
+
+            formations.forEach(formation => {
+                let card = `
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm border-0 rounded-lg overflow-hidden">
+                            <div class="card-body text-right">
+                                <h5 class="card-title text-dark">${formation.nomFormation}</h5>
+                                <p class="card-text text-muted">${formation.descriptionFormation.slice(0, 100)}...</p>
+                                <p><strong class="text-dark">Durée :</strong> ${formation.dureeFormation} heures</p>
+                                <a href="/formation/${formation.id}" class="btn btn-success mt-3 px-4 py-2 rounded-pill w-100">Voir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+
+            document.getElementById('formationCount').textContent = formations.length;
+        });
+});
+</script>
+
+<script src="{{ asset('js/search.js') }}"></script>
+
+
+{% endblock %}

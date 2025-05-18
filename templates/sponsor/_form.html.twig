@@ -1,0 +1,24 @@
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="col-md-6 mb-3">
+            {{ form_label(form.sponsor_name, "Veuillez enter votre nom") }}
+            {{ form_widget(form.sponsor_name, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.sponsor_name) }}
+        </div>
+    <div class="col-md-6 mb-3">
+           {{ form_label(form.montant, "le montant souhaiter") }}
+            {{ form_widget(form.montant, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.montant) }}
+        </div>
+    <div class="col-md-6 mb-3">
+           {{ form_label(form.email, "Votre adresse mail") }}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.email) }}
+        </div>
+    <div class="col-md-6 mb-3">
+            {{ form_label(form.event, "L'enevenement souhaiter") }}
+            {{ form_widget(form.event, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.event) }}
+        </div>
+{{ form_end(form) }}
+
+

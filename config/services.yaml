@@ -1,0 +1,40 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+ #parameters:
+  #  google.credentials_path: '%kernel.project_dir%/config/google_credentials.json'
+  # google.calendar_id: 'your_calendar_id@group.calendar.google.com' # Replace with your actual calendar ID
+
+imports:
+    - { resource: parameters.yaml }
+
+parameters:
+      google.credentials_path: '%kernel.project_dir%/config/google_credentials.json'
+      google.calendar_id: 'primary'  # Using primary calendar
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        bind:
+            $image_directory: '%image_directory%'
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # Configure the GoogleCalendarService with explicit credentials path and calendar ID
+    App\Service\GoogleCalendarService:
+        arguments:
+            $credentialsPath: '%google.credentials_path%'
+            $calendarId: '%google.calendar_id%'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

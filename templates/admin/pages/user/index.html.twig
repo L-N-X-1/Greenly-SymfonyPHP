@@ -1,0 +1,89 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid py-2">
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">All User</h6>
+              </div>
+              <br>
+              <a href="{{ path('app_user_new') }}" class="btn btn-primary btn-sm">Create New User</a>
+
+            </div>
+            {{ include('includes/flashes.twig') }}
+
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Roles</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for user in users %}
+                      <tr>
+                        <td>
+                          <div class="d-flex px-2 py-1">
+                            <div>
+                             {% if user.imgLink is not empty %}
+                                <img src="{{ vich_uploader_asset(user,'imgFile') }}" class="avatar avatar-sm me-3 border-radius-lg" alt="User Image">
+                            {% else %}
+                               <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                            {% endif %}
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">{{ user.fullName }}</h6>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">{{ user.email }}</p>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                          {% if 'ROLE_ADMIN' in user.roles %}
+                            <span class="badge badge-sm bg-gradient-success">Admin</span>
+                          {% elseif 'ROLE_ENTREPRISE' in user.roles %}
+                            <span class="badge badge-sm bg-gradient-secondary">Entreprise</span>
+                          {% elseif 'ROLE_ASSOCIATION' in user.roles %}
+                            <span class="badge badge-sm bg-gradient-danger">Association</span>
+                          {% elseif 'ROLE_FORMATEUR' in user.roles %}
+                            <span class="badge badge-sm bg-gradient-warning">Formateur</span>
+                          {% else %}
+                            <span class="badge badge-sm bg-gradient-primary">Utilisateur</span>
+                          {% endif %}
+                        </td>
+
+                        <td class="align-middle text-center">
+                          <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-sm btn-outline-success" title="Show">
+                              Show
+                          </a>
+                          <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-sm btn-outline-primary" title="Edit">
+                              Edit
+                          </a>
+                          <a href="{{ path('app_user_reset_password', {'id': user.id}) }}" class="btn btn-sm btn-outline-warning" title="Change Password">
+                              Change Password
+                          </a>
+                          <a href="{{ path('app_user_delete', {'id': user.id}) }}" class="btn btn-sm btn-outline-secondary" title="delete">
+                              Delete User
+                          </a>
+                      </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

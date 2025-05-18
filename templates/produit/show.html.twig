@@ -1,0 +1,116 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste des produits et des commandes{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+                        <h6 class="text-white text-capitalize ps-3">Liste des produits</h6>
+                    </div>
+                </div>
+                <div class="card-body px-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nom</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Prix</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Catégorie</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                                </tr>
+                            </thead>
+                            <script src="{{ asset('js/search.js') }}"></script>
+                            <tbody>
+                                {% for produit in paginationProduits %}
+                                    <tr>
+                                        <td>{{ produit.id }}</td>
+                                        <td>{{ produit.nom }}</td>
+                                        <td>{{ produit.prix }} TND</td>
+                                        <td>{{ produit.description }}</td>
+                                        <td>{{ produit.date ? produit.date|date('Y-m-d') : 'N/A' }}</td>
+                                        <td>{{ produit.categorie }}</td>
+                                        <td>
+                                            <a href="{{ path('produit_edit', {'id': produit.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                                            <form method="post" action="{{ path('produit_delete', {'id': produit.id}) }}" style="display: inline-block;">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}">
+                                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7" class="text-center">Aucun produit trouvé.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Pagination #}
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                {{ knp_pagination_render(paginationProduits) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+                        <h6 class="text-white text-capitalize ps-3">Liste des commandes</h6>
+                    </div>
+                </div>
+                <div class="card-body px-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Produit</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Utilisateur</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Montant</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Statut</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Numéro de téléphone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for commande in paginationCommandes %}
+                                    <tr>
+                                        <td>{{ commande.id }}</td>
+                                        <td>{{ commande.produit.id }}</td>
+                                        <td>{{ commande.idU }}</td>
+                                        <td>{{ commande.montant }} TND</td>
+                                        <td>{{ commande.statut }}</td>
+                                        <td>{{ commande.date ? commande.date|date('Y-m-d') : 'N/A' }}</td>
+                                        <td>{{ commande.numerot }}</td>
+                                        <td>
+                                            <a href="{{ path('commande_edit', {'id': commande.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                                        <td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7" class="text-center">Aucune commande trouvée.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

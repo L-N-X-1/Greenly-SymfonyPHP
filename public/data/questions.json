@@ -1,0 +1,332 @@
+{
+    "verre": [
+        {
+            "question": "Quelle est la température nécessaire pour faire fondre du verre recyclé ?",
+            "options": ["500°C", "1000°C", "1500°C", "2000°C"],
+            "reponse": 2
+        },
+        {
+            "question": "Quelle couleur de verre est la plus difficile à recycler ?",
+            "options": ["Transparent", "Vert", "Brun", "Noir"],
+            "reponse": 3
+        },
+        {
+            "question": "Quelle est la principale matière première utilisée pour fabriquer du verre ?",
+            "options": ["Quartz", "Sable", "Argile", "Calcaire"],
+            "reponse": 1
+        },
+        {
+            "question": "Combien de fois le verre peut-il être recyclé ?",
+            "options": ["1 fois", "10 fois", "À l'infini", "100 fois"],
+            "reponse": 2
+        },
+        {
+            "question": "Quel est l’avantage principal du recyclage du verre ?",
+            "options": ["Économie d'eau", "Économie d'énergie", "Réduction des émissions de CO2", "Réduction des déchets"],
+            "reponse": 1
+        },
+        {
+            "question": "Que faut-il retirer avant de recycler une bouteille en verre ?",
+            "options": ["L'étiquette", "Le bouchon", "Le verre coloré", "L'eau"],
+            "reponse": 1
+        },
+        {
+            "question": "Quel type de verre ne peut pas être recyclé ?",
+            "options": ["Verre trempé", "Verre transparent", "Verre coloré", "Verre soufflé"],
+            "reponse": 0
+        },
+        {
+            "question": "Pourquoi le verre recyclé est-il meilleur pour l’environnement ?",
+            "options": ["Il réduit les déchets", "Il économise du sable", "Il consomme moins d'énergie", "Toutes ces réponses"],
+            "reponse": 3
+        },
+        {
+            "question": "Quel pays est l’un des plus gros recycleurs de verre en Europe ?",
+            "options": ["France", "Allemagne", "Italie", "Espagne"],
+            "reponse": 1
+        }
+    ],
+    "plastique": [
+        {
+            "question": "Quel type de plastique est le plus couramment recyclé ?",
+            "options": ["PET", "PVC", "PP", "PS"],
+            "reponse": 0
+        },
+        {
+            "question": "Combien de temps faut-il pour qu'une bouteille en plastique se décompose dans la nature ?",
+            "options": ["100 ans", "250 ans", "450 ans", "1000 ans"],
+            "reponse": 2
+        },
+        {
+            "question": "Quel est le principal problème du plastique dans l'environnement ?",
+            "options": ["Il est biodégradable", "Il est difficile à recycler", "Il pollue les océans", "Il est trop utilisé"],
+            "reponse": 2
+        },
+        {
+            "question": "Quelle alternative écologique existe au plastique traditionnel ?",
+            "options": ["Le plastique biodégradable", "Le verre", "L'acier inoxydable", "Toutes ces réponses"],
+            "reponse": 3
+        },
+        {
+            "question": "Quelle est la meilleure façon de réduire la pollution plastique ?",
+            "options": ["Recycler plus", "Utiliser moins de plastique", "Brûler le plastique", "Laisser le plastique en décharge"],
+            "reponse": 1
+        },
+        {
+            "question": "Quel est l’impact du plastique sur la faune marine ?",
+            "options": ["Aucun", "Les animaux le mangent", "Il améliore leur habitat", "Il purifie l’eau"],
+            "reponse": 1
+        },
+        {
+            "question": "Quel plastique est le plus toxique lorsqu’il est brûlé ?",
+            "options": ["PET", "PVC", "PP", "PS"],
+            "reponse": 1
+        },
+        {
+            "question": "Quelle est la meilleure façon de trier les plastiques ?",
+            "options": ["Par couleur", "Par taille", "Par type de résine", "Au hasard"],
+            "reponse": 2
+        },
+        {
+            "question": "Quel pays est le plus grand producteur de déchets plastiques au monde ?",
+            "options": ["États-Unis", "Chine", "Inde", "Brésil"],
+            "reponse": 1
+        }
+    ],
+    "papier": [
+        {
+            "question": "Quel est le principal matériau utilisé pour fabriquer du papier ?",
+            "options": ["Bambou", "Coton", "Bois", "Plastique"],
+            "reponse": 3
+        },
+        {
+            "question": "Combien de fois le papier peut-il être recyclé en moyenne ?",
+            "options": ["1 fois", "3 fois", "5 à 7 fois", "À l'infini"],
+            "reponse": 3
+        },
+        {
+            "question": "Quel est l’un des plus grands producteurs de papier au monde ?",
+            "options": ["France", "États-Unis", "Brésil", "Canada"],
+            "reponse": 2
+        },
+        {
+            "question": "Quel type de papier ne peut pas être recyclé ?",
+            "options": ["Papier blanc", "Papier glacé", "Papier kraft", "Papier journal"],
+            "reponse": 2
+        },
+        {
+            "question": "Quelle est la principale cause de la déforestation liée au papier ?",
+            "options": ["Industrie du meuble", "Production de papier", "Agriculture", "Exploitation minière"],
+            "reponse": 2
+        },
+        {
+            "question": "Combien de litres d’eau sont nécessaires pour produire 1 kg de papier ?",
+            "options": ["5 litres", "50 litres", "500 litres", "5000 litres"],
+            "reponse": 3
+        },
+        {
+            "question": "Que peut-on faire pour réduire la consommation de papier ?",
+            "options": ["Imprimer en recto-verso", "Utiliser du papier recyclé", "Privilégier le numérique", "Toutes ces réponses"],
+            "reponse": 3
+        },
+        {
+            "question": "Comment le papier est-il recyclé ?",
+            "options": ["Il est brûlé", "Il est transformé en pâte à papier", "Il est fondu", "Il est broyé"],
+            "reponse": 2
+        },
+        {
+            "question": "Quel est l’avantage du recyclage du papier ?",
+            "options": ["Réduction de la pollution", "Économie d’eau et d’énergie", "Moins de déforestation", "Toutes ces réponses"],
+            "reponse": 3
+        }
+    ],
+        "métaux": [
+          {
+            "question": "Quel métal est le plus recyclé au monde ?",
+            "options": ["Fer", "Aluminium", "Cuivre", "Or"],
+            "reponse": 0
+          },
+          {
+            "question": "Quel est l'avantage principal du recyclage des métaux ?",
+            "options": ["Réduction des déchets", "Économie d'énergie", "Moins d'exploitation minière", "Toutes ces réponses"],
+            "reponse": 3
+          },
+          {
+            "question": "Quel métal est couramment utilisé dans les canettes de soda ?",
+            "options": ["Acier", "Cuivre", "Aluminium", "Étain"],
+            "reponse": 2
+          },
+          {
+            "question": "Quel pays est le plus grand recycleur d’acier au monde ?",
+            "options": ["États-Unis", "Allemagne", "Chine", "Japon"],
+            "reponse": 2
+          },
+          {
+            "question": "Pourquoi le recyclage de l'aluminium est-il important ?",
+            "options": ["Il réduit la consommation d'énergie", "Il préserve les ressources naturelles", "Il réduit les émissions de CO2", "Toutes ces réponses"],
+            "reponse": 3
+          },
+          {
+            "question": "Quel métal est toxique lorsqu'il est jeté dans la nature ?",
+            "options": ["Aluminium", "Cuivre", "Plomb", "Fer"],
+            "reponse": 2
+          },
+          {
+            "question": "Quel est le processus principal de recyclage des métaux ?",
+            "options": ["Fusion", "Concassage", "Distillation", "Sublimation"],
+            "reponse": 0
+          },
+          {
+            "question": "Quel métal est souvent recyclé à partir des câbles électriques ?",
+            "options": ["Or", "Platine", "Cuivre", "Étain"],
+            "reponse": 2
+          },
+          {
+            "question": "Quel matériau est souvent mélangé aux métaux dans les objets du quotidien ?",
+            "options": ["Plastique", "Bois", "Verre", "Papier"],
+            "reponse": 0
+          }
+        ],
+        "électronique": [
+          {
+            "question": "Quel métal précieux est souvent récupéré lors du recyclage des appareils électroniques ?",
+            "options": ["Argent", "Or", "Platine", "Cuivre"],
+            "reponse": 1
+          },
+          {
+            "question": "Quel composant des batteries est particulièrement polluant s’il est mal recyclé ?",
+            "options": ["Nickel", "Cadmium", "Lithium", "Plomb"],
+            "reponse": 1
+          },
+          {
+            "question": "Que signifie l’acronyme DEEE dans le recyclage électronique ?",
+            "options": ["Déchets d'Equipements Électriques et Électroniques", "Déchets Électroniques et Énergie Économique", "Développement d'Environnement et d'Équipements Électriques", "Dispositifs Électriques et Électroniques Endommagés"],
+            "reponse": 0
+          },
+          {
+            "question": "Quel pays recycle le plus de déchets électroniques au monde ?",
+            "options": ["Allemagne", "Norvège", "Japon", "Suisse"],
+            "reponse": 3
+          },
+          {
+            "question": "Quel est le principal danger des déchets électroniques ?",
+            "options": ["Émission de gaz toxiques", "Contamination des sols et eaux", "Explosion spontanée", "Aucune conséquence"],
+            "reponse": 1
+          },
+          {
+            "question": "Quel composant électronique contient le plus de terres rares ?",
+            "options": ["Résistances", "Écrans LCD", "Batteries", "Condensateurs"],
+            "reponse": 1
+          },
+          {
+            "question": "Quelle action est préférable avant de jeter un appareil électronique ?",
+            "options": ["Le vendre", "Le donner", "Le déposer dans un point de collecte", "Toutes ces réponses"],
+            "reponse": 3
+          },
+          {
+            "question": "Pourquoi les circuits imprimés doivent-ils être recyclés séparément ?",
+            "options": ["Ils contiennent des composants dangereux", "Ils sont plus faciles à recycler", "Ils peuvent être réutilisés directement", "Ils sont faits de plastique"],
+            "reponse": 0
+          },
+          {
+            "question": "Quel est l’un des matériaux les plus recyclés dans un téléphone portable ?",
+            "options": ["Le verre", "Le cuivre", "Le plastique", "L'aluminium"],
+            "reponse": 1
+          }
+        ],
+        "vetements": [
+          {
+            "question": "Quel est le principal matériau utilisé pour fabriquer des vêtements ?",
+            "options": ["Coton", "Polyester", "Laine", "Soie"],
+            "reponse": 0
+          },
+          {
+            "question": "Quelle est la meilleure façon de recycler des vêtements usagés ?",
+            "options": ["Les jeter à la poubelle", "Les donner à une association", "Les brûler", "Les stocker indéfiniment"],
+            "reponse": 1
+          },
+          {
+            "question": "Quel impact environnemental a la production de vêtements en coton ?",
+            "options": ["Consommation élevée d'eau", "Aucune pollution", "Émission de CO2 réduite", "Biodégradation rapide"],
+            "reponse": 0
+          },
+          {
+            "question": "Quel type de textile est le plus difficile à recycler ?",
+            "options": ["Polyester", "Coton", "Laine", "Soie"],
+            "reponse": 0
+          },
+          {
+            "question": "Que peut-on faire avec des vêtements abîmés ?",
+            "options": ["Les transformer en chiffons", "Les composter", "Les brûler", "Les enterrer"],
+            "reponse": 0
+          },
+          {
+            "question": "Quel est le principal problème des vêtements en polyester ?",
+            "options": ["Ils sont biodégradables", "Ils libèrent des microplastiques", "Ils sont trop chers", "Ils ne sont pas colorés"],
+            "reponse": 1
+          },
+          {
+            "question": "Quel pays est le plus grand producteur de vêtements au monde ?",
+            "options": ["France", "Chine", "États-Unis", "Brésil"],
+            "reponse": 1
+          },
+          {
+            "question": "Quelle est l'une des solutions pour une mode plus durable ?",
+            "options": ["Acheter plus de vêtements neufs", "Réduire la consommation et recycler", "Utiliser plus de polyester", "Interdire les vêtements"],
+            "reponse": 1
+          },
+          {
+            "question": "Que signifie le terme 'upcycling' dans l'industrie textile ?",
+            "options": ["Transformer d'anciens vêtements en nouveaux produits", "Jeter les vêtements", "Produire des vêtements en masse", "Importer des vêtements usagés"],
+            "reponse": 0
+          }
+        ],
+        "meubles": [
+          {
+            "question": "Quel matériau est le plus utilisé pour fabriquer des meubles ?",
+            "options": ["Métal", "Verre", "Bois", "Plastique"],
+            "reponse": 2
+          },
+          {
+            "question": "Quelle est la meilleure solution pour un meuble dont on ne veut plus ?",
+            "options": ["Le brûler", "Le jeter aux ordures", "Le donner ou le recycler", "Le démonter et le stocker"],
+            "reponse": 2
+          },
+          {
+            "question": "Quel type de bois est le plus durable pour fabriquer des meubles ?",
+            "options": ["Bois massif", "Contreplaqué", "Bois compressé", "Carton"],
+            "reponse": 0
+          },
+          {
+            "question": "Que peut-on faire avec un meuble en bois recyclé ?",
+            "options": ["Fabriquer du bois de chauffage", "Créer de nouveaux meubles", "Produire du papier", "Toutes ces réponses"],
+            "reponse": 3
+          },
+          {
+            "question": "Quel est l’impact environnemental de la fabrication de meubles en bois ?",
+            "options": ["Déforestation", "Pollution de l’eau", "Émission de CO2", "Toutes ces réponses"],
+            "reponse": 3
+          },
+          {
+            "question": "Quel matériau est souvent mélangé au bois pour fabriquer des meubles ?",
+            "options": ["Verre", "Plastique", "Métal", "Pierre"],
+            "reponse": 2
+          },
+          {
+            "question": "Que signifie 'éco-conception' dans le secteur du mobilier ?",
+            "options": ["Produire des meubles jetables", "Concevoir des meubles durables et recyclables", "Utiliser du plastique", "Vendre plus de meubles"],
+            "reponse": 1
+          },
+          {
+            "question": "Comment recycler un meuble en métal ?",
+            "options": ["Le fondre pour en faire un nouvel objet", "Le jeter à la poubelle", "Le stocker dans un garage", "L’enterrer"],
+            "reponse": 0
+          },
+          {
+            "question": "Quel pays est connu pour ses meubles en bois durable ?",
+            "options": ["France", "Suède", "Chine", "Brésil"],
+            "reponse": 1
+          }
+        ]
+      }
+      

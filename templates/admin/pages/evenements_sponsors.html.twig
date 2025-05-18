@@ -1,0 +1,207 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Inscription à l'événement{% endblock %}
+
+{% block body %}
+
+    
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-success shadow-success border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">Events Management</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center justify-content-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">#</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Event Name</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Description</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Location</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Sponsors</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for event in events %}
+                      <tr>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0 ps-3">{{ event.id }}</p>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">{{ event.eventName }}</p>
+                        </td>
+                        <td>
+                          <p class="text-xs text-secondary mb-0">{{ event.eventDescription }}</p>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                          <p class="text-xs font-weight-bold mb-0">{{ event.eventDate ? event.eventDate|date('Y-m-d H:i:s') : '' }}</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-xs font-weight-bold mb-0">{{ event.eventLocation }}</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-xs font-weight-bold mb-0">{{ event.eventStatus }}</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-xs font-weight-bold mb-0">
+                            {% for sponsor in event.sponsors %}
+                              {{ sponsor.sponsorName }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                          </p>
+                        </td>
+                        <td class="align-middle">
+                          <a href="{{ path('app_event_edit', {'id': event.id}) }}" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit event">
+                            Modifier
+                          </a>
+                          <form method="post" action="{{ path('app_event_delete', {'id': event.id}) }}" class="d-inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet événement?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+                            <button type="submit" class="btn btn-link text-danger text-xs p-0 m-0 align-baseline">Supprimer</button>
+                          </form>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="text-end mb-4 me-4">
+            <a href="{{ path('app_event_new') }}" class="btn bg-gradient-success">Create new Event</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-success shadow-success border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">Sponsors Management</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Sponsor Name</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Amount</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Event</th>
+                      <th class="text-secondary opacity-7">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for sponsor in sponsors %}
+                      <tr>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0 ps-3">{{ sponsor.id }}</p>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">{{ sponsor.sponsorName }}</p>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">{{ sponsor.montant }}</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-xs font-weight-bold mb-0">{{ sponsor.event ? sponsor.event.eventName : '' }}</p>
+                        </td>
+                        <td class="align-middle">
+                          <a href="{{ path('app_sponsor_show', {'id': sponsor.id}) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Show sponsor">
+                            View
+                          </a>
+                          <a href="{{ path('app_sponsor_edit', {'id': sponsor.id}) }}" class="text-secondary font-weight-bold text-xs ms-2" data-toggle="tooltip" data-original-title="Edit sponsor">
+                            Edit
+                          </a>
+                        </td>
+                      </tr>
+                    {% else %}
+                      <tr>
+                        <td colspan="5" class="text-center">
+                          <p class="text-xs font-weight-bold mb-0">No records found</p>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-success shadow-success border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">Gestion des Participants</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Participant</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Téléphone</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Événement</th>
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for attendee in attendees %}
+                      <tr>
+                        <td>
+                          <p class="text-xs text-secondary mb-0 px-3">#{{ attendee.id }}</p>
+                        </td>
+                        <td>
+                          <div class="d-flex px-3 py-1">
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">{{ attendee.name }}</h6>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-xs text-secondary mb-0">{{ attendee.phoneNumber }}</p>
+                        </td>
+                        <td>
+                          <span class="text-xs font-weight-bold">{{ attendee.event ? attendee.event.eventName : 'No event' }}</span>
+                        </td>
+                        <td class="align-middle text-center">
+                          <a href="{{ path('app_attendee_edit', {'id': attendee.id}) }}" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
+                            <i class="material-symbols-rounded">edit</i>
+                          </a>
+                        </td>
+                      </tr>
+                    {% else %}
+                      <tr>
+                        <td colspan="5" class="text-center text-sm">Aucun participant trouvé</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  {% endblock %}
+
+  

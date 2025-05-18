@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Événements{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}    <style>
+        body {
+            background-color: #e8f5e9;  /* Light green background */
+        }
+        
+        .page-header {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+            border-radius: 0 0 50px 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+          .event-card {
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            background: white;
+            min-height: 400px;  /* Make cards taller */
+            font-size: 1.1em;   /* Slightly larger text */
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-header-color {
+            background: linear-gradient(135deg, #6C63FF, #3F3D56);
+            height: 8px;
+        }
+
+        .event-card:nth-child(3n+1) .card-header-color {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+        }
+
+        .event-card:nth-child(3n+2) .card-header-color {
+            background: linear-gradient(135deg, #4ECDC4, #45B7AF);
+        }
+
+        .event-card:nth-child(3n+3) .card-header-color {
+            background: linear-gradient(135deg, #6C63FF, #574AE2);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            color: #2D3436;
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-date {
+            color: #FF6B6B;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .event-location {
+            color: #45B7AF;
+            margin: 10px 0;
+        }
+
+        .event-description {
+            color: #636E72;
+            margin: 15px 0;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .event-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background: linear-gradient(135deg, #00B09B, #96C93D);
+            color: white;
+        }
+
+        .status-inactive {
+            background: linear-gradient(135deg, #636E72, #B2BEC3);
+            color: white;
+        }
+
+        .sponsors-list {
+            font-size: 0.9em;
+            color: #6C63FF;
+            background-color: #F0F3FF;
+            padding: 8px 12px;
+            border-radius: 10px;
+        }
+
+        .sponsors-list i {
+            color: #574AE2;
+        }
+
+        .alert-info {
+            background: linear-gradient(135deg, #6C63FF, #574AE2);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1 class="text-center mb-0">Nos Événements</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            {% for event in events %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card event-card shadow">
+                        <div class="card-header-color"></div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ event.eventName }}</h5>
+                            
+                            <div class="event-date mb-2">
+                                <i class="fas fa-calendar-alt me-2"></i>
+                                {{ event.eventDate ? event.eventDate|date('d F Y à H:i') : '' }}
+                            </div>
+                            
+                            <div class="event-location mb-2">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                {{ event.eventLocation }}
+                            </div>
+                            
+                            <div class="event-description">
+                                {{ event.eventDescription|length > 150 ? event.eventDescription|slice(0, 150) ~ '...' : event.eventDescription }}
+                            </div>
+                            
+                            <div class="event-status mb-2">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                {{ event.eventStatus }}
+                            </div>
+                            <div>                                
+                                {% if event.sponsors|length > 0 %}
+                                    <div class="sponsors-list">
+                                        <i class="fas fa-handshake me-1"></i>
+                                        Sponsors:
+                                        {% for sponsor in event.sponsors %}
+                                            {{ sponsor.sponsorName }}{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-info" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Aucun événement n'est disponible pour le moment.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+{% endblock %}

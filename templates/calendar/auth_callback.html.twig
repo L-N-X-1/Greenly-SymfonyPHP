@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Google Calendar Authentication{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="text-center">
+        <h2>Google Calendar Authentication</h2>
+        <p>Processing your request...</p>
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Redirect after a short delay to show the status
+    setTimeout(function() {
+        window.location.href = '{{ path('app_event_index') }}';
+    }, 2000);
+</script>
+{% endblock %}
