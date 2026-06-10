@@ -35,6 +35,8 @@ services:
         arguments:
             $credentialsPath: '%google.credentials_path%'
             $calendarId: '%google.calendar_id%'
+            $clientId: '%env(GOOGLE_CLIENT_ID)%'
+            $clientSecret: '%env(GOOGLE_CLIENT_SECRET)%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

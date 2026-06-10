@@ -1,23 +1,66 @@
-{% extends 'main/barre.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Produits Responsables{% endblock %}
 
 {% block body %}
-<div class="container forum-container mt-5">
-  <h2>Forum des Produits</h2>
-  
-  <form>
-    <div class="mb-3">
-      <input type="text" class="form-control" placeholder="Nom du produit">
-    </div>
-    <div class="mb-3">
-      <input type="text" class="form-control" placeholder="Catégorie">
-    </div>
-    <div class="mb-3">
-      <textarea class="form-control" rows="3" placeholder="Description"></textarea>
-    </div>
-    <button type="submit" class="btn btn-success">Publier</button>
-  </form>
-</div>
+    <section class="g-hero">
+        <img src="{{ asset('images/accueil.png') }}" alt="Produits" class="g-hero-bg">
+        <div class="g-hero-content">
+            <h1>Nos Produits Responsables</h1>
+            <p>Achetez des produits issus de l'économie circulaire et soutenez la production responsable.</p>
+        </div>
+    </section>
 
-</body>
-</html>
+    <div class="g-section">
+        {{ include('includes/flashes.twig') }}
+
+        <div class="row g-4">
+            {% for produit in produits %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="g-card h-100 d-flex flex-column">
+                        {% set cat = produit.categorie|lower %}
+                        {% set emoji = '🌿' %}
+                        {% if 'meuble' in cat %}{% set emoji = '🪑' %}
+                        {% elseif 'plastic' in cat or 'plastique' in cat %}{% set emoji = '🥤' %}
+                        {% elseif 'vetement' in cat or 'vêtement' in cat %}{% set emoji = '👕' %}
+                        {% elseif 'papier' in cat %}{% set emoji = '📄' %}
+                        {% elseif 'verre' in cat %}{% set emoji = '🍷' %}
+                        {% elseif 'electr' in cat %}{% set emoji = '💻' %}
+                        {% endif %}
+
+                        <div style="height: 160px; background: linear-gradient(135deg, var(--g-50), var(--g-100)); display: flex; align-items: center; justify-content: center; font-size: 4.5rem;">
+                            {{ emoji }}
+                        </div>
+
+                        <div class="g-card-body d-flex flex-column flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 style="font-weight: 700; color: var(--g-text); margin-bottom: 0;">{{ produit.nom }}</h5>
+                                <span class="g-badge g-badge-green" style="font-size: 0.8rem;">{{ produit.prix }} TND</span>
+                            </div>
+
+                            <div class="mb-3 text-muted" style="font-size: 0.82rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                                <i class="fas fa-tags me-1" style="color: var(--g-primary);"></i> {{ produit.categorie }}
+                            </div>
+
+                            <p style="font-size: 0.9rem; color: var(--g-text-muted); line-height: 1.5; margin-bottom: 20px;" class="flex-grow-1">
+                                {{ produit.description }}
+                            </p>
+
+                            <div class="mt-auto">
+                                <a href="{{ path('gestion_commande_addform', {'id': produit.id}) }}" class="g-btn g-btn-primary w-100">
+                                    <i class="fas fa-shopping-basket me-1"></i> Acheter
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <div class="fs-1 mb-3">📦</div>
+                    <h4 style="color: var(--g-text);">Aucun produit disponible</h4>
+                    <p class="text-muted">Revenez plus tard pour découvrir nos produits recyclés et durables.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

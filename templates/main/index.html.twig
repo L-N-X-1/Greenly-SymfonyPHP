@@ -4,32 +4,61 @@
 
 {% block body %}
 
-    <div class="hero">
-            <img src="{{ asset('images/accueil.png') }}" alt="Page d'accueil" class="img-fluid w-100">
-            <div class="hero-text">
-                <h1>Bienvenue sur notre plateforme</h1>
-                <p>Engageons-nous ensemble pour un avenir plus durable.</p>
+    <section class="g-hero">
+        <img src="{{ asset('images/accueil.png') }}" alt="Greenly — Accueil" class="g-hero-bg">
+        <div class="g-hero-content">
+            <h1>Consommation & Production Responsable</h1>
+            <p>Engageons-nous ensemble pour un avenir plus durable. Rejoignez notre communauté éco-responsable.</p>
+            <a href="{{ path('app_formations') }}" class="g-btn g-btn-white me-3">Découvrir les formations</a>
+            <a href="{{ path('app_register') }}" class="g-btn g-btn-outline" style="border-color:white;color:white;">Rejoindre Greenly</a>
+        </div>
+    </section>
+
+    <section class="g-section">
+        <h2 class="g-section-title">Nos Services</h2>
+        <div class="g-services-grid">
+            <div class="g-service-card">
+                <img src="{{ asset('images/service1.jpg') }}" alt="Gestion des déchets">
+                <div class="g-service-card-body">
+                    <h3>Gestion des déchets</h3>
+                    <p style="color:var(--g-text-muted);font-size:.875rem;margin-top:8px;">Collecte et valorisation des matières recyclables.</p>
+                </div>
+            </div>
+            <div class="g-service-card">
+                <img src="{{ asset('images/service2.jpg') }}" alt="Recyclage et transformation">
+                <div class="g-service-card-body">
+                    <h3>Recyclage & Transformation</h3>
+                    <p style="color:var(--g-text-muted);font-size:.875rem;margin-top:8px;">Partenariats avec des entreprises spécialisées.</p>
+                </div>
+            </div>
+            <div class="g-service-card">
+                <div style="height:180px;background:linear-gradient(135deg,var(--g-50),var(--g-100));display:flex;align-items:center;justify-content:center;font-size:3rem;">🌍</div>
+                <div class="g-service-card-body">
+                    <h3>Formations Éco</h3>
+                    <p style="color:var(--g-text-muted);font-size:.875rem;margin-top:8px;">Apprentissage des bonnes pratiques durables.</p>
+                </div>
             </div>
         </div>
+    </section>
 
-    <section class="hero">
-        <div class="hero-text">
-            <h1>Consommation et Production Responsable</h1>
-            <p>Agissons ensemble pour un avenir durable.</p>
-            <a href="#about" class="btn">En savoir plus</a>
+    <section class="g-section-alt" id="about">
+        <div class="g-section-inner">
+            <h2 class="g-section-title">À propos de nous</h2>
+            <div class="g-faq" style="max-width:720px;margin:0 auto;">
+                <details>
+                    <summary>Qu'est-ce que vous faites avec les produits recyclés ?</summary>
+                    <p>Nous collectons les produits recyclables tels que les meubles, les vêtements et les plastiques. Les plastiques collectés sont ensuite distribués à des entreprises spécialisées dans la réutilisation et le recyclage, afin de réduire la pollution et de soutenir l'économie circulaire.</p>
+                </details>
+                <details>
+                    <summary>Comment fonctionne le processus de collecte des plastiques ?</summary>
+                    <p>Une fois que vous avez déposé des plastiques sur notre plateforme, nous organisons la collecte et nous envoyons les matériaux à des entreprises partenaires spécialisées dans le recyclage. Ces entreprises réutilisent les plastiques pour fabriquer de nouveaux produits, contribuant ainsi à la réduction des déchets plastiques.</p>
+                </details>
+                <details>
+                    <summary>Puis-je vendre ou donner des objets via votre plateforme ?</summary>
+                    <p>Oui, vous pouvez soit vendre, soit donner des produits directement sur notre site. Nous acceptons des dons de meubles, de vêtements et de plastiques pour soutenir notre mission de réduction de la pollution et de promotion du recyclage.</p>
+                </details>
+            </div>
         </div>
     </section>
 
-    
-    <section id="services">
-        <h2>Nos Services</h2>
-        <div class="service">
-            <img src="{{ asset('images/service1.jpg') }}" alt="Service 1">
-            <h3>Gestion des dechets</h3>
-        </div>
-        <div class="service">
-            <img src="{{ asset('images/service2.jpg') }}" alt="Service 2">
-            <h3>Recyclage et transformation</h3>
-        </div>
-    </section>
 {% endblock %}

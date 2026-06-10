@@ -1,103 +1,113 @@
-{% extends 'main/barre.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Modules de Formation{% endblock %}
 
 {% block body %}
-<style>
-  .card-img-top {
-      height: 200px; /* Uniformiser la hauteur des images */
-      object-fit: cover; /* Recadrer l'image sans déformation */
-  }
-  .card {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-  }
-  .card-body {
-      flex-grow: 1;
-  }
-</style>
-
-<div class="container mt-5">
-  <h2 class="text-center my-4">📚 Nos Modules de Formation</h2>
-  
-  <div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-    <input type="text" id="searchInput" class="form-control" placeholder="Rechercher un module...">
-  </div>
-   </div>
-
-  <p>Nombre de modules disponibles : <span id="moduleCount">{{ modules|length }}</span></p>
-
-  <div class="row justify-content-center" id="moduleContainer">
-    {% for module in modules %}
-      <div class="col-md-4 mb-4 module-card">
-        <div class="card shadow-lg border-0">
-          <div class="card-body">
-            <h4 class="card-title text-success">{{ module.nomModule }}</h4>
-            <p class="card-text">{{ module.descriptionModule|slice(0, 100) }}...</p>
-            <p><strong>📅 Durée :</strong> {{ module.NbHeures }} heures</p>
-            <p><strong>📌 Formations incluses :</strong> {{ module.formations|length }}</p>
-            <a href="{{ path('module_details', { id: module.id }) }}" class="btn btn-outline-success">Voir plus</a>
-          </div>
+    <section class="g-hero">
+        <img src="{{ asset('images/accueil.png') }}" alt="Modules" class="g-hero-bg">
+        <div class="g-hero-content">
+            <h1>Nos Modules de Formation</h1>
+            <p>Découvrez nos programmes d'apprentissage thématiques et suivez vos progrès.</p>
         </div>
-      </div>
-    {% else %}
-      <p class="text-center">Aucun module disponible.</p>
-    {% endfor %}
-  </div>
-</div>
+    </section>
 
-<script>
-document.getElementById('searchInput').addEventListener('input', function() {
-    let query = this.value.toLowerCase();
-    let cards = document.querySelectorAll('.module-card');
-    let visibleCount = 0;
+    <div class="g-section">
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-8">
+                <div class="input-group">
+                    <span class="input-group-text" style="background: var(--g-surface); border-color: var(--g-border); border-right: none;">
+                        <i class="fas fa-search" style="color: var(--g-primary);"></i>
+                    </span>
+                    <input type="text" id="searchInput" class="form-control" style="border-left: none; padding-left: 8px !important;" placeholder="Rechercher un module...">
+                </div>
+            </div>
+        </div>
 
-    cards.forEach(card => {
-        let title = card.querySelector('.card-title').textContent.toLowerCase();
-        if (title.includes(query)) {
-            card.style.display = 'block';
-            visibleCount++;
-        } else {
-            card.style.display = 'none';
-        }
-    });
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <p class="mb-0 text-muted" style="font-weight: 500;">
+                Nombre de modules disponibles : <span id="moduleCount" style="color: var(--g-primary); font-weight: 700;">{{ modules|length }}</span>
+            </p>
+        </div>
 
-    document.getElementById('moduleCount').textContent = visibleCount;
-});
-</script>
+        <div class="row justify-content-center g-4" id="moduleContainer">
+            {% for module in modules %}
+                <div class="col-md-6 col-lg-4 module-card">
+                    <div class="g-card h-100 d-flex flex-column">
+                        <div class="g-card-body d-flex flex-column flex-grow-1">
+                            <h4 style="font-weight: 700; color: var(--g-primary); margin-bottom: 12px;">{{ module.nomModule }}</h4>
+                            <p style="font-size: 0.9rem; color: var(--g-text-muted); line-height: 1.5; margin-bottom: 16px;" class="flex-grow-1">
+                                {{ module.descriptionModule|slice(0, 100) }}...
+                            </p>
+                            
+                            <div class="mb-2" style="font-size: 0.88rem; color: var(--g-text);">
+                                <strong>📅 Durée :</strong> {{ module.NbHeures }} heures
+                            </div>
+                            
+                            <div class="mb-3" style="font-size: 0.88rem; color: var(--g-text);">
+                                <strong>📌 Formations incluses :</strong> {{ module.formations|length }}
+                            </div>
 
-<script>
-document.getElementById('searchInput').addEventListener('input', function() {
-    let query = this.value.trim();
-
-    fetch(`/api/modules/search?q=${query}`)
-        .then(response => response.json())
-        .then(modules => {
-            let container = document.getElementById('moduleContainer');
-            container.innerHTML = ''; // Effacer les anciens modules
-
-            modules.forEach(module => {
-                let card = `
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-lg border-0">
-                            <div class="card-body">
-                                <h4 class="card-title text-success">${module.nomModule}</h4>
-                                <p class="card-text">${module.descriptionModule.slice(0, 100)}...</p>
-                                <p><strong>📅 Durée :</strong> ${module.NbHeures} heures</p>
-                                <p><strong>📌 Formations incluses :</strong> ${module.formations.length}</p>
-                                <a href="/module/${module.id}" class="btn btn-outline-success">Voir plus</a>
+                            <div class="mt-auto">
+                                <a href="{{ path('module_details', { id: module.id }) }}" class="g-btn g-btn-outline w-100">
+                                    Voir plus <i class="fas fa-chevron-right ms-1"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
-                `;
-                container.innerHTML += card;
+                </div>
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">Aucun module disponible.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('searchInput').addEventListener('input', function() {
+        let query = this.value.trim();
+
+        fetch(`/api/modules/search?q=${query}`)
+            .then(response => response.json())
+            .then(modules => {
+                let container = document.getElementById('moduleContainer');
+                container.innerHTML = ''; 
+
+                if (modules.length === 0) {
+                    container.innerHTML = '<div class="col-12 text-center py-5"><p class="text-muted">Aucun module trouvé.</p></div>';
+                    document.getElementById('moduleCount').textContent = 0;
+                    return;
+                }
+
+                modules.forEach(module => {
+                    let card = `
+                        <div class="col-md-6 col-lg-4 module-card">
+                            <div class="g-card h-100 d-flex flex-column">
+                                <div class="g-card-body d-flex flex-column flex-grow-1">
+                                    <h4 style="font-weight: 700; color: var(--g-primary); margin-bottom: 12px;">${module.nomModule}</h4>
+                                    <p style="font-size: 0.9rem; color: var(--g-text-muted); line-height: 1.5; margin-bottom: 16px;" class="flex-grow-1">
+                                        ${module.descriptionModule.slice(0, 100)}...
+                                    </p>
+                                    <div class="mb-2" style="font-size: 0.88rem; color: var(--g-text);">
+                                        <strong>📅 Durée :</strong> ${module.NbHeures} heures
+                                    </div>
+                                    <div class="mb-3" style="font-size: 0.88rem; color: var(--g-text);">
+                                        <strong>📌 Formations incluses :</strong> ${module.formations.length}
+                                    </div>
+                                    <div class="mt-auto">
+                                        <a href="/module/${module.id}" class="g-btn g-btn-outline w-100">
+                                            Voir plus <i class="fas fa-chevron-right ms-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += card;
+                });
+
+                document.getElementById('moduleCount').textContent = modules.length;
             });
-
-            document.getElementById('moduleCount').textContent = modules.length;
-        });
-});
-</script>
-
-<script src="{{ asset('js/search1.js') }}"></script>
+    });
+    </script>
 {% endblock %}

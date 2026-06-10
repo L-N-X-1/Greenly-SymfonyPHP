@@ -211,18 +211,27 @@ public function details(EntityManagerInterface $entityManager, int $id): Respons
         'longitude' => $longitude,
     ]);
 }
-#[Route('/api/formations/search', name: 'search_formations')]
-public function searchFormations(Request $request, FormationRepository $formationRepository): JsonResponse
-{
-    $query = $request->query->get('q', '');
-    $formations = $formationRepository->createQueryBuilder('f')
-        ->where('f.nomFormation LIKE :query')
-        ->setParameter('query', "%$query%")
-        ->getQuery()
-        ->getResult();
+    #[Route('/api/formations/search', name: 'search_formations')]
+    public function searchFormations(Request $request, FormationRepository $formationRepository): JsonResponse
+    {
+        $query = $request->query->get('q', '');
+        $formations = $formationRepository->createQueryBuilder('f')
+            ->where('f.nom_formation LIKE :query')
+            ->setParameter('query', "%$query%")
+            ->getQuery()
+            ->getResult();
 
-    return $this->json($formations);
-}
+        $data = [];
+        foreach ($formations as $formation) {
+            $data[] = [
+                'id' => $formation->getId(),
+                'nomFormation' => $formation->getNomFormation(),
+                'descriptionFormation' => $formation->getDescriptionFormation(),
+                'dureeFormation' => $formation->getDureeFormation(),
+            ];
+        }
+        return $this->json($data);
+    }
 
 }
 

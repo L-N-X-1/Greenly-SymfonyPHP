@@ -343,12 +343,22 @@ public function game(int $id): Response
     {
         $query = $request->query->get('q', '');
         $modules = $moduleRepository->createQueryBuilder('m')
-            ->where('m.nomModule LIKE :query')
+            ->where('m.nom_module LIKE :query')
             ->setParameter('query', "%$query%")
             ->getQuery()
             ->getResult();
     
-        return $this->json($modules);
+        $data = [];
+        foreach ($modules as $module) {
+            $data[] = [
+                'id' => $module->getId(),
+                'nomModule' => $module->getNomModule(),
+                'descriptionModule' => $module->getDescriptionModule(),
+                'NbHeures' => $module->getNbHeures(),
+                'formations' => array_map(fn($f) => ['id' => $f->getId()], $module->getFormations()->toArray()),
+            ];
+        }
+        return $this->json($data);
     }
     #[Route('/module/{id}/video', name: 'module_video')]
 public function moduleVideo(int $id, EntityManagerInterface $entityManager): Response

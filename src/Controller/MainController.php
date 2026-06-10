@@ -4,6 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Formation;
 use App\Entity\Module;
+use App\Entity\Produit;
+use App\Entity\Sponsor;
+use App\Entity\Event;
+use App\Entity\Commande;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,33 +31,57 @@ class MainController extends AbstractController
     }
 
     #[Route('/associations', name: 'app_associations')]
-    public function associations(): Response
+    public function associations(EntityManagerInterface $entityManager): Response
     {
-        return $this->render('main/associations.html.twig');
+        $associations = $entityManager->getRepository(User::class)->createQueryBuilder('u')
+            ->andWhere('u.roles LIKE :role')
+            ->setParameter('role', '%ROLE_ASSOCIATION%')
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('main/associations.html.twig', [
+            'associations' => $associations,
+        ]);
     }
 
     #[Route('/evenements', name: 'app_evenements')]
-    public function evenements(): Response
+    public function evenements(EntityManagerInterface $entityManager): Response
     {
-        return $this->render('main/evenements.html.twig');
+        $events = $entityManager->getRepository(Event::class)->findAll();
+
+        return $this->render('main/evenements.html.twig', [
+            'events' => $events,
+        ]);
     }
 
     #[Route('/sponsors', name: 'app_sponsors')]
-    public function sponsors(): Response
+    public function sponsors(EntityManagerInterface $entityManager): Response
     {
-        return $this->render('main/sponsors.html.twig');
+        $sponsors = $entityManager->getRepository(Sponsor::class)->findAll();
+
+        return $this->render('main/sponsors.html.twig', [
+            'sponsors' => $sponsors,
+        ]);
     }
 
     #[Route('/produits', name: 'app_produits')]
-    public function produits(): Response
+    public function produits(EntityManagerInterface $entityManager): Response
     {
-        return $this->render('main/produits.html.twig');
+        $produits = $entityManager->getRepository(Produit::class)->findAll();
+
+        return $this->render('main/produits.html.twig', [
+            'produits' => $produits,
+        ]);
     }
 
     #[Route('/commandes', name: 'app_commandes')]
-    public function commandes(): Response
+    public function commandes(EntityManagerInterface $entityManager): Response
     {
-        return $this->render('main/commandes.html.twig');
+        $commandes = $entityManager->getRepository(Commande::class)->findAll();
+
+        return $this->render('main/commandes.html.twig', [
+            'commandes' => $commandes,
+        ]);
     }
     
     //#[Route('/formations', name: 'app_formations')]
@@ -74,21 +103,4 @@ class MainController extends AbstractController
             'modules' => $modules
         ]);
     }
-
-   /* #[Route('/inscription', name: 'app_inscription')]
-    public function inscription(): Response
-    {
-        return $this->render('main/inscription.html.twig');
-    }
-
-    #[Route('/login', name: 'app_login')]
-    public function login(): Response
-    {
-        return $this->render('main/login.html.twig');
-    }*/
-
-   
-
-  
-    
 }

@@ -123,16 +123,6 @@ class RegisterUserType extends AbstractType
                     'class' => 'form-control',
                 ],
             ]) 
-            ->add('recaptcha', Recaptcha3Type::class, [
-                'constraints' => [
-                    new Recaptcha3([
-                        'message' => 'There was a problem verifying the reCAPTCHA. Please try again.',
-                    ])
-                ],
-                'attr' => [
-                    'data-badge' => 'inline',
-                ]
-            ])
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $form = $event->getForm();
                 $data = $event->getData();
